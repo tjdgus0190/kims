@@ -266,10 +266,26 @@ body::after {
 .showcase__progress span { display: block; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left; box-shadow: 0 0 0 0; }
 .showcase__progress { position: relative; }
 .showcase__progress::before { content: ''; position: absolute; left: var(--gutter); right: var(--gutter); top: 0; height: 1px; background: var(--line); }
-.is-pinned .showcase__track { overflow: visible; scroll-snap-type: none; padding-left: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter))); }
-.is-pinned .showcase__track > * { flex-basis: 360px; }
-.is-pinned.showcase { padding: 0; }
-.is-pinned .showcase__pin { height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+/* 드래그 슬라이더 */
+.showcase__track { padding-inline: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter))); scroll-padding-inline: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter))); cursor: grab; outline: none; }
+.showcase__track:focus-visible { outline: 2px solid var(--gold); outline-offset: 6px; }
+.showcase__track.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.showcase__track.is-dragging a { pointer-events: none; }
+.showcase__track img { -webkit-user-drag: none; user-select: none; }
+@media (min-width: 1024px) { .showcase__track > * { flex-basis: 360px; } }
+.showcase__nav { display: flex; align-items: center; gap: 10px; }
+.showcase__hint { font-size: 13px; color: var(--ink-soft); margin-right: 8px; }
+.showcase__btn { width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--ink); font-size: 18px; cursor: pointer; transition: background .4s, color .4s, border-color .4s, opacity .3s; }
+.showcase__btn:hover:not(:disabled) { background: var(--ink); color: var(--ivory); border-color: var(--ink); }
+.showcase__btn:disabled { opacity: .3; cursor: default; }
+.showcase__nav .link-arrow { margin-left: 14px; }
+@media (max-width: 767px) { .showcase__btn, .showcase__hint { display: none; } .showcase__nav .link-arrow { margin-left: 0; } }
+@media (hover: none) { .showcase__hint { display: none; } }
+/* 커서: 슬라이더 위에서 DRAG 표시 */
+@media (hover: hover) and (pointer: fine) {
+  .cursor.is-drag .cursor__ring { width: 84px; height: 84px; background: rgba(21, 18, 15, 0.82); border-color: transparent; }
+  .cursor.is-drag .cursor__ring::after { content: 'DRAG'; position: absolute; inset: 0; display: grid; place-items: center; font-size: 11px; letter-spacing: 0.25em; color: var(--gold-3); }
+}
 
 /* ---------- Product Card ---------- */
 .p-card { perspective: 1000px; }

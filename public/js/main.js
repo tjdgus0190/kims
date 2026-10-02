@@ -98,14 +98,63 @@
     });
   });
 
-  /* 모바일 가로 스크롤 진행바 */
+  /* ---------- 시그니처 슬라이더: 마우스 드래그(관성) · 터치 스와이프 · 버튼 · 진행바 ---------- */
   var track = $('[data-showcase-track]');
   var bar = $('[data-showcase-bar]');
-  if (track && bar) {
-    track.addEventListener('scroll', function () {
-      var max = track.scrollWidth - track.clientWidth;
-      bar.style.transform = 'scaleX(' + (max > 0 ? track.scrollLeft / max : 0) + ')';
-    }, { passive: true });
+  if (track) dragSlider(track);
+
+  function dragSlider(el) {
+    var prev = $('[data-showcase-prev]');
+    var next = $('[data-showcase-next]');
+    var max = function () { return el.scrollWidth - el.clientWidth; };
+    var step = function () {
+      var c = el.firstElementChild;
+      return c ? c.getBoundingClientRect().width + (parseFloat(getComputedStyle(el).columnGap) || 24) : 320;
+    };
+    function update() {
+      var m = max();
+      if (bar) bar.style.transform = 'scaleX(' + (m > 0 ? el.scrollLeft / m : 0) + ')';
+      if (prev) prev.disabled = el.scrollLeft <= 2;
+      if (next) next.disabled = el.scrollLeft >= m - 2;
+    }
+    el.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+    if (prev) prev.addEventListener('click', function () { el.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    if (next) next.addEventListener('click', function () { el.scrollBy({ left: step(), behavior: 'smooth' }); });
+
+    /* 마우스 드래그 (터치는 브라우저 기본 스와이프 사용) */
+    var down = false, moved = false, startX = 0, startLeft = 0, lastX = 0, lastT = 0, vel = 0, raf = 0;
+    el.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      down = true; moved = false;
+      startX = lastX = e.clientX; startLeft = el.scrollLeft; lastT = performance.now(); vel = 0;
+      cancelAnimationFrame(raf);
+    });
+    window.addEventListener('pointermove', function (e) {
+      if (!down) return;
+      var dx = e.clientX - startX;
+      if (!moved && Math.abs(dx) > 6) { moved = true; el.classList.add('is-dragging'); }
+      if (!moved) return;
+      el.scrollLeft = startLeft - dx;
+      var now = performance.now();
+      vel = (e.clientX - lastX) / Math.max(1, now - lastT);
+      lastX = e.clientX; lastT = now;
+    });
+    window.addEventListener('pointerup', function () {
+      if (!down) return;
+      down = false;
+      if (!moved) return;
+      var v = -vel * 16; /* 손을 놓은 속도만큼 미끄러지듯 이어서 이동 */
+      (function glide() {
+        el.scrollLeft += v; v *= 0.92;
+        if (Math.abs(v) > 0.6 && el.scrollLeft > 0 && el.scrollLeft < max()) raf = requestAnimationFrame(glide);
+        else el.classList.remove('is-dragging'); /* 스냅 복원 → 가장 가까운 카드에 정렬 */
+      })();
+    });
+    /* 드래그로 끝난 경우 카드 링크가 클릭되지 않도록 */
+    el.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+    el.addEventListener('dragstart', function (e) { e.preventDefault(); });
   }
 
   /* ---------- 펩타이드 파티클 캔버스 (히어로) ---------- */
@@ -208,24 +257,11 @@
   var seal = $('.hero__seal');
   if (seal) gsap.from(seal, { scale: 0, rotate: -90, duration: 1.4, ease: 'back.out(1.6)', delay: root.classList.contains('show-intro') ? 3.2 : 1 });
 
-  /* 시그니처 제품: 데스크톱에서 가로 스크롤 고정 */
-  var showcase = $('[data-showcase]');
-  if (showcase && track) {
-    ScrollTrigger.matchMedia({
-      '(min-width: 1024px)': function () {
-        showcase.classList.add('is-pinned');
-        var distance = function () { return Math.max(0, track.scrollWidth - window.innerWidth + 80); };
-        if (distance() <= 0) { showcase.classList.remove('is-pinned'); return; }
-        var tween = gsap.to(track, {
-          x: function () { return -distance(); }, ease: 'none',
-          scrollTrigger: {
-            trigger: showcase, start: 'top top', end: function () { return '+=' + distance(); },
-            pin: $('.showcase__pin', showcase), scrub: 0.8, invalidateOnRefresh: true,
-            onUpdate: function (self) { if (bar) bar.style.transform = 'scaleX(' + self.progress + ')'; },
-          },
-        });
-        return function () { showcase.classList.remove('is-pinned'); tween.kill(); gsap.set(track, { x: 0 }); };
-      },
+  /* 시그니처 카드: 섹션에 들어올 때 오른쪽에서 차례로 등장 */
+  if (track) {
+    gsap.from(track.children, {
+      x: 80, opacity: 0, duration: 1.1, ease: 'power3.out', stagger: 0.08,
+      scrollTrigger: { trigger: track, start: 'top 85%' },
     });
   }
 
@@ -293,7 +329,9 @@
     window.addEventListener('mousemove', function (e) { cursor.classList.add('is-active'); dx(e.clientX); dy(e.clientY); rx(e.clientX); ry(e.clientY); });
     document.addEventListener('mouseleave', function () { cursor.classList.remove('is-active'); });
     document.addEventListener('mouseover', function (e) {
-      cursor.classList.toggle('is-hover', !!e.target.closest('a, button, summary, [data-tilt], input, select, textarea'));
+      var onTrack = !!e.target.closest('[data-showcase-track]');
+      cursor.classList.toggle('is-drag', onTrack);
+      cursor.classList.toggle('is-hover', !onTrack && !!e.target.closest('a, button, summary, [data-tilt], input, select, textarea'));
     });
 
     $$('[data-magnetic]').forEach(function (el) {

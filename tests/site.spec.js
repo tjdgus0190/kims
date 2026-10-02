@@ -127,6 +127,39 @@ test.describe('공개 페이지', () => {
     expect(await page.evaluate(() => window.scrollY)).toBeLessThan(5);
   });
 
+  test('시그니처: 드래그 · 버튼으로 넘겨보기', async ({ page, isMobile }) => {
+    await page.goto('/');
+    await page.waitForLoadState('load');
+    await page.waitForFunction(() => !document.documentElement.classList.contains('show-intro')); // 첫 방문 인트로 종료 대기
+    const track = page.locator('[data-showcase-track]');
+    await track.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1500);
+    expect(await track.evaluate((el) => el.scrollWidth > el.clientWidth)).toBe(true);
+    expect(await track.evaluate((el) => el.scrollLeft)).toBe(0);
+    if (isMobile) {
+      // 터치 기기: 브라우저 기본 가로 스와이프 (overflow-x 스크롤)
+      expect(await track.evaluate((el) => getComputedStyle(el).overflowX)).toBe('auto');
+      return;
+    }
+    const box = await track.boundingBox();
+    const y = box.y + box.height / 2;
+    await page.mouse.move(box.x + box.width * 0.7, y);
+    await page.mouse.down();
+    for (let i = 1; i <= 10; i++) await page.mouse.move(box.x + box.width * 0.7 - i * 50, y);
+    await page.mouse.up();
+    await page.waitForTimeout(1200);
+    const afterDrag = await track.evaluate((el) => el.scrollLeft);
+    expect(afterDrag).toBeGreaterThan(200);
+    expect(page.url()).toMatch(/\/$/); // 드래그 후 카드 링크로 이동하지 않음
+    await expect(page.locator('[data-showcase-prev]')).toBeEnabled();
+    await page.locator('[data-showcase-prev]').click();
+    await page.waitForTimeout(900);
+    expect(await track.evaluate((el) => el.scrollLeft)).toBeLessThan(afterDrag);
+    // 드래그 없이 클릭하면 상세로 이동
+    await page.locator('[data-showcase-track] .p-card a').first().click();
+    await expect(page).toHaveURL(/\/products\//);
+  });
+
   test('없는 페이지는 404', async ({ page }) => {
     const res = await page.goto('/products/없는-상품');
     expect(res?.status()).toBe(404);

@@ -128,15 +128,20 @@
 
   <!-- SIGNATURE PRODUCTS -->
   <section class="showcase" data-showcase>
-    <div class="showcase__pin">
+    <div class="showcase__inner">
       <div class="container showcase__head">
         <div>
           <p class="eyebrow" data-reveal>SIGNATURE</p>
           <h2 class="h2" data-split><%= settings.brandName %> 시그니처</h2>
         </div>
-        <a class="link-arrow" href="/products" data-reveal>전체 제품 보기 <span>→</span></a>
+        <div class="showcase__nav" data-reveal>
+          <span class="showcase__hint">드래그해서 넘겨보세요</span>
+          <button type="button" class="showcase__btn" data-showcase-prev aria-label="이전 제품" disabled>←</button>
+          <button type="button" class="showcase__btn" data-showcase-next aria-label="다음 제품">→</button>
+          <a class="link-arrow" href="/products">전체 제품 보기 <span>→</span></a>
+        </div>
       </div>
-      <div class="showcase__track" data-showcase-track>
+      <div class="showcase__track" data-showcase-track tabindex="0" aria-label="시그니처 제품 목록 (좌우로 넘겨보기)">
         <% featured.forEach(function (p) { %>
           <%- include('partials/product-card', { p }) %>
         <% }) %>
