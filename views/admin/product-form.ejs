@@ -11,28 +11,7 @@
 <form class="a-form" method="post" action="<%= isNew ? '/admin/products' : '/admin/products/' + p.id %>" enctype="multipart/form-data" data-product-form>
   <input type="hidden" name="_csrf" value="<%= csrf %>">
 
-  <section class="a-card">
-    <h2>상품 사진</h2>
-    <p class="a-muted">첫 번째 사진이 대표 이미지로 사용됩니다. 세로형(4:5) 사진을 권장하며, 큰 사진은 업로드 시 자동으로 최적화됩니다.</p>
-    <div class="a-images" data-images>
-      <% (p.images || []).forEach(function (src) { %>
-        <figure class="a-img" data-existing>
-          <img src="<%= src %>" alt="">
-          <input type="hidden" name="existingImages" value="<%= src %>">
-          <div class="a-img__tools">
-            <button type="button" data-img-left title="앞으로">←</button>
-            <button type="button" data-img-right title="뒤로">→</button>
-            <button type="button" data-img-remove title="삭제">✕</button>
-          </div>
-        </figure>
-      <% }) %>
-      <label class="a-img a-img--add">
-        <input type="file" name="images" accept="image/jpeg,image/png,image/webp,image/avif" multiple data-file-input>
-        <span>+ 사진 추가</span>
-      </label>
-    </div>
-    <div class="a-images a-images--new" data-new-previews></div>
-  </section>
+  <%- include('_images', { title: '상품 사진', field: 'images', keep: 'existingImages', list: p.images, mode: 'photo', desc: '첫 번째 사진이 대표 이미지(목록·카탈로그)로 사용됩니다. 큰 사진은 업로드 시 자동으로 최적화됩니다.' }) %>
 
   <section class="a-card a-grid">
     <h2 class="a-span">기본 정보</h2>
@@ -60,6 +39,8 @@
     <label class="a-field a-span"><span>주요 성분</span><textarea name="ingredients" rows="3"><%= p.ingredients || '' %></textarea></label>
     <label class="a-field a-span"><span>주소(URL) 이름 <small>(비워두면 상품명으로 자동 생성)</small></span><input name="slug" value="<%= p.slug || '' %>"></label>
   </section>
+
+  <%- include('_images', { title: '상세 이미지', field: 'detailImages', keep: 'existingDetailImages', list: p.detailImages, mode: 'detail', desc: '쇼핑몰 상세페이지처럼 세로로 긴 이미지를 올리면 제품 상세 화면 아래에 순서대로 표시됩니다. (가로 1000px 로 자동 최적화)' }) %>
 
   <div class="a-actions">
     <button class="a-btn" type="submit" data-submit>저장하기</button>

@@ -1,0 +1,23 @@
+<%# 이미지 업로드 블록: field(업로드 이름), keep(기존 유지 이름), list, mode('photo' | 'detail') %>
+<section class="a-card" data-image-block data-mode="<%= mode %>">
+  <h2><%= title %></h2>
+  <p class="a-muted"><%= desc %></p>
+  <div class="a-images<%= mode === 'detail' ? ' a-images--detail' : '' %>" data-images>
+    <% (list || []).forEach(function (src) { %>
+      <figure class="a-img" data-existing>
+        <img src="<%= src %>" alt="" loading="lazy">
+        <input type="hidden" name="<%= keep %>" value="<%= src %>">
+        <div class="a-img__tools">
+          <button type="button" data-img-left title="앞으로">←</button>
+          <button type="button" data-img-right title="뒤로">→</button>
+          <button type="button" data-img-remove title="삭제">✕</button>
+        </div>
+      </figure>
+    <% }) %>
+    <label class="a-img a-img--add">
+      <input type="file" name="<%= field %>" accept="image/jpeg,image/png,image/webp,image/avif" multiple data-file-input>
+      <span>+ <%= mode === 'detail' ? '상세 이미지 추가' : '사진 추가' %></span>
+    </label>
+  </div>
+  <div class="a-images a-images--new<%= mode === 'detail' ? ' a-images--detail' : '' %>" data-new-previews></div>
+</section>

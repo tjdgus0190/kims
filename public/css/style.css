@@ -365,7 +365,7 @@ body::after {
 
 .pdp { display: grid; gap: 40px; padding-top: 24px; padding-bottom: clamp(80px, 10vw, 140px); }
 .pdp__main { overflow: hidden; border-radius: 4px; background: var(--sand); }
-.pdp__main img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; transition: opacity .4s; }
+.pdp__main img { width: 100%; height: auto; max-height: 82vh; object-fit: contain; transition: opacity .4s; }
 .pdp__thumbs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 10px; }
 .pdp__thumb { padding: 0; border: 1px solid transparent; background: none; cursor: pointer; opacity: .55; transition: opacity .3s, border-color .3s; }
 .pdp__thumb.is-active, .pdp__thumb:hover { opacity: 1; border-color: var(--gold); }
@@ -504,7 +504,6 @@ body::after {
 .lineup__item:hover { background: var(--noir); color: var(--ivory); border-color: var(--noir); }
 .lineup__item:hover p { color: rgba(246, 241, 234, 0.65); }
 @media (min-width: 900px) {
-  .lineup__grid { grid-template-columns: repeat(3, 1fr); }
   .lineup__item { grid-template-columns: 1fr; padding: 0 0 24px; }
   .lineup__media { aspect-ratio: 4 / 4.4; border-radius: 4px 4px 0 0; }
   .lineup__body { padding: 0 24px; }
@@ -578,3 +577,26 @@ body::after {
   .cat-order__grid { grid-template-columns: 1fr 1fr; gap: 10mm; }
   .container { padding: 0; max-width: none; }
 }
+
+/* ---------- 24시간 문의 배지 ---------- */
+.h24 { display: inline-flex; align-items: center; padding: 1px 7px; border-radius: 99px; background: var(--gold); color: var(--noir); font-style: normal; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; line-height: 1.6; vertical-align: middle; }
+.header-call .h24 { margin-left: 2px; }
+.inquiry__hours { margin: 0; color: var(--ink-2); font-size: 15px; }
+.callbar__btn--primary { white-space: nowrap; }
+
+/* ---------- 제품 상세 이미지 ---------- */
+.pdp-detail { padding: 0 0 clamp(80px, 10vw, 140px); }
+.pdp-detail__head { text-align: center; margin-bottom: 36px; }
+.pdp-detail__head .eyebrow { justify-content: center; }
+.pdp-detail__body { max-width: 860px; margin: 0 auto; background: #fff; box-shadow: 0 30px 80px -50px rgba(60, 40, 20, 0.35); }
+.pdp-detail__body img { width: 100%; height: auto; }
+.pdp-detail__cta { max-width: 860px; margin: 40px auto 0; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 28px 32px; background: var(--noir); color: var(--ivory); border-radius: 4px; }
+.pdp-detail__cta p { margin: 0; font-family: var(--f-serif); font-size: 18px; }
+.pdp-detail__cta strong { color: var(--gold-3); font-weight: 500; }
+.pdp-detail__cta .btn { background: var(--gold); border-color: var(--gold); color: var(--noir); }
+
+/* ---------- 라인 소개 ---------- */
+.cat-group__en, .lineup__en { margin: 0 0 4px; font-size: 11px; letter-spacing: 0.28em; color: var(--gold); }
+.cat-group__desc { margin: 6px 0 0; color: var(--ink-soft); font-size: 15px; }
+.cat-group__head { align-items: flex-end; }
+@media (min-width: 900px) { .lineup__grid { grid-template-columns: repeat(4, 1fr); } .lineup__body h3 { font-size: 22px; } }

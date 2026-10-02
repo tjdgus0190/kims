@@ -15,16 +15,16 @@ const toPrice = (v) => {
 };
 
 const SETTING_FIELDS = [
-  'brandName', 'brandNameEn', 'productBrand', 'productBrandEn', 'awardBadge', 'awardTitle', 'awardCategory', 'awardYears', 'ceoName', 'phone', 'email', 'address', 'businessNumber', 'hours', 'kakaoUrl',
+  'brandName', 'brandNameEn', 'awardBadge', 'awardTitle', 'awardCategory', 'awardYears', 'ceoName', 'phone', 'email', 'address', 'businessNumber', 'hours', 'kakaoUrl',
   'instagramUrl', 'heroEyebrow', 'heroTitle', 'heroSubtitle', 'storyTitle', 'storyText',
-  'metaTitle', 'metaDescription', 'metaKeywords', 'naverVerification', 'googleVerification',
+  'categoryNotes', 'metaTitle', 'metaDescription', 'metaKeywords', 'naverVerification', 'googleVerification',
 ];
 
 // Netlify 함수는 요청 1건당 최대 6MB 이므로 서버리스 환경에서는 한도를 낮춥니다.
 const MAX_FILE = process.env.STORAGE === 'blobs' || process.env.NETLIFY ? 4.5 * 1024 * 1024 : 10 * 1024 * 1024;
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: MAX_FILE, files: 10 },
+  limits: { fileSize: MAX_FILE, files: 20 },
   fileFilter: (req, file, cb) => cb(null, Boolean(IMAGE_TYPES[file.mimetype])),
 });
 
@@ -89,11 +89,23 @@ router.get('/products/:id', (req, res, next) => {
   res.render('admin/product-form', { product, categories: store.categories() });
 });
 
-async function productFromBody(req, existing = { images: [] }) {
+/** 기존 이미지 중 남길 것 정리 + 새 업로드 저장 (대표 사진 / 상세 이미지 공통) */
+async function mergeImages(keptInput, before = [], files = []) {
+  const kept = toArray(keptInput).filter((u) => before.includes(u));
+  before.filter((u) => !kept.includes(u)).forEach(removeUpload);
+  return [...kept, ...(await saveUploads(files))];
+}
+
+const uploadFields = upload.fields([
+  { name: 'images', maxCount: 10 },
+  { name: 'detailImages', maxCount: 10 },
+]);
+
+async function productFromBody(req, existing = {}) {
   const b = req.body;
-  const kept = toArray(b.existingImages).filter((u) => existing.images.includes(u));
-  existing.images.filter((u) => !kept.includes(u)).forEach(removeUpload);
-  const uploaded = await saveUploads(req.files);
+  const files = req.files || {};
+  const images = await mergeImages(b.existingImages, existing.images, files.images);
+  const detailImages = await mergeImages(b.existingDetailImages, existing.detailImages, files.detailImages);
   return {
     name: String(b.name || '').trim(),
     slug: String(b.slug || '').trim(),
@@ -109,18 +121,19 @@ async function productFromBody(req, existing = { images: [] }) {
     highlights: String(b.highlights || '').trim(),
     featured: b.featured === 'on',
     visible: b.visible === 'on',
-    images: [...kept, ...uploaded],
+    images,
+    detailImages,
   };
 }
 
-router.post('/products', upload.array('images', 10), auth.verifyCsrf, async (req, res) => {
+router.post('/products', uploadFields, auth.verifyCsrf, async (req, res) => {
   const data = await productFromBody(req);
   if (!data.name) return res.status(400).send('상품명을 입력해 주세요.');
   await store.createProduct(data);
   res.redirect('/admin?saved=1');
 });
 
-router.post('/products/:id', upload.array('images', 10), auth.verifyCsrf, async (req, res, next) => {
+router.post('/products/:id', uploadFields, auth.verifyCsrf, async (req, res, next) => {
   const product = store.getProduct(req.params.id);
   if (!product) return next();
   const data = await productFromBody(req, product);
@@ -131,7 +144,7 @@ router.post('/products/:id', upload.array('images', 10), auth.verifyCsrf, async 
 
 router.post('/products/:id/delete', auth.verifyCsrf, async (req, res) => {
   const product = await store.deleteProduct(req.params.id);
-  product?.images?.forEach(removeUpload);
+  [...(product?.images || []), ...(product?.detailImages || [])].forEach(removeUpload);
   res.redirect('/admin?saved=deleted');
 });
 

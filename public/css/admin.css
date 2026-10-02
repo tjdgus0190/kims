@@ -104,3 +104,7 @@ input, select, textarea, button { font: inherit; color: inherit; }
 .a-login .a-card { width: min(100%, 380px); display: grid; gap: 16px; }
 .a-login h1 { text-align: center; font-size: 20px; margin: 0 0 8px; }
 @media (min-width: 760px) { .a-header { position: sticky; top: 0; } }
+.a-images--detail { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
+.a-images--detail .a-img { aspect-ratio: 1 / 2.4; }
+.a-images--detail .a-img img { object-position: top; }
+.a-images--detail .a-img:first-child::before { display: none; }

@@ -9,7 +9,7 @@ const path = require('path');
 const express = require('express');
 const store = require('./lib/store');
 const backend = require('./lib/backend');
-const { helpers } = require('./lib/view');
+const { helpers, parseCategoryNotes } = require('./lib/view');
 const { ROOT } = require('./lib/paths');
 
 const app = express();
@@ -48,7 +48,11 @@ app.get('/uploads/:key', async (req, res, next) => {
 /* 매 요청마다 최신 데이터를 읽음 (서버리스 인스턴스 간 데이터 일관성) */
 app.use(async (req, res, next) => {
   await store.load();
-  Object.assign(res.locals, helpers(req), { settings: store.settings, path: req.path });
+  Object.assign(res.locals, helpers(req), {
+    settings: store.settings,
+    categoryInfo: parseCategoryNotes(store.settings.categoryNotes),
+    path: req.path,
+  });
   next();
 });
 

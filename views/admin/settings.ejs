@@ -14,9 +14,8 @@
   <%
     const groups = [
       ['기본 정보', [
-        field('brandName', '상호 (한글)'), field('brandNameEn', '상호 영문 표기'), field('ceoName', '대표자명'),
-        field('productBrand', '취급 브랜드 (한글)'), field('productBrandEn', '취급 브랜드 (영문)'),
-        field('phone', '대표번호 (구매 문의 연결 번호)'), field('hours', '상담 가능 시간'), field('email', '이메일 (선택)'),
+        field('brandName', '상호 (한글)'), field('brandNameEn', '상호 영문 표기'), field('ceoName', '대표자명 (화면에 표시되지 않음)'),
+        field('phone', '대표번호 (구매 문의 연결 번호)'), field('hours', '문의 가능 시간 안내 문구'), field('email', '이메일 (선택)'),
         field('businessNumber', '사업자등록번호 (선택)'), field('address', '주소 (선택)'),
         field('kakaoUrl', '카카오톡 채널 링크 (선택)'), field('instagramUrl', '인스타그램 링크 (선택)'),
       ]],
@@ -28,6 +27,7 @@
         field('heroEyebrow', '상단 작은 문구'), field('heroTitle', '메인 제목 (줄바꿈 = 엔터)', { area: 2 }),
         field('heroSubtitle', '메인 소개 문구', { area: 3 }), field('storyTitle', '브랜드 스토리 제목'),
         field('storyText', '브랜드 스토리 본문 (빈 줄로 문단 구분)', { area: 7 }),
+        field('categoryNotes', '제품 라인 소개 (한 줄에 하나: 카테고리명|영문명|소개 문구)', { area: 8 }),
       ]],
       ['검색 노출 (SEO)', [
         field('metaTitle', '검색 결과 제목'), field('metaDescription', '검색 결과 설명 (80~120자 권장)', { area: 3 }),

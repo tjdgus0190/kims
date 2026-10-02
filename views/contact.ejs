@@ -14,12 +14,12 @@
     <a class="contact-card" href="<%= telHref(settings.phone) %>" data-reveal data-tilt>
       <span class="eyebrow">CALL</span>
       <strong><%= settings.phone %></strong>
-      <p>가장 빠른 상담 방법입니다.<br><%= settings.hours %></p>
+      <p>가장 빠른 상담 방법입니다.<br><span class="h24">24H</span> <%= settings.hours %></p>
     </a>
     <a class="contact-card" href="<%= smsHref(settings.phone, '[' + settings.brandName + '] 제품 문의드립니다.') %>" data-reveal data-tilt>
       <span class="eyebrow">MESSAGE</span>
       <strong>문자 문의</strong>
-      <p>통화가 어려우시면 문자로 남겨주세요.<br>확인 후 바로 답장드립니다.</p>
+      <p>통화가 어려우시면 24시간 언제든<br>문자로 남겨주세요. 확인 후 바로 답장드립니다.</p>
     </a>
     <a class="contact-card" href="#inquiry" data-reveal data-tilt>
       <span class="eyebrow">CALLBACK</span>

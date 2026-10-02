@@ -6,7 +6,9 @@
     <div class="container">
       <p class="eyebrow" data-reveal>PRODUCTS</p>
       <h1 class="h1" data-split>제품 안내</h1>
-      <p class="lead" data-reveal>모든 제품은 대표번호 <a href="<%= telHref(settings.phone) %>"><%= settings.phone %></a> 로 상담 후 구매하실 수 있습니다.</p>
+      <% const info = category && categoryInfo[category]; %>
+      <% if (info && info.desc) { %><p class="lead" data-reveal><strong><%= info.en %></strong> — <%= info.desc %></p><% } %>
+      <p class="lead" data-reveal>모든 제품은 대표번호 <a href="<%= telHref(settings.phone) %>"><%= settings.phone %></a> 로 24시간 언제든 상담 후 구매하실 수 있습니다.</p>
     </div>
   </section>
 

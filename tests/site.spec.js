@@ -8,13 +8,17 @@ test.describe('공개 페이지', () => {
     const errors = [];
     page.on('pageerror', (e) => errors.push(e.message));
     await page.goto('/');
-    await expect(page).toHaveTitle(/제이앤코슈/);
+    await expect(page).toHaveTitle(/인테라/);
     await expect(page.locator('h1.hero__title')).toBeVisible();
     // 전화 링크가 대표번호로 연결
     await expect(page.locator(`a[href="tel:01040305956"]`).first()).toBeAttached();
-    // 사업자 정보
-    await expect(page.locator('.biz-info')).toContainText('정정숙');
-    await expect(page.locator('.biz-info')).toContainText(PHONE);
+
+    // 하단 사업자 정보(상호/대표자/상담시간)는 표시하지 않음
+    await expect(page.locator('.site-footer')).not.toContainText('정정숙');
+    await expect(page.locator('.site-footer')).not.toContainText('대표자');
+    await expect(page.locator('.site-footer')).toContainText('24시간');
+    await expect(page.locator('.logo__en')).toHaveText('INTERRA');
+    await expect(page.locator('body')).not.toContainText('제이앤코슈');
     // 시그니처 상품 노출
     expect(await page.locator('.showcase .p-card').count()).toBeGreaterThanOrEqual(3);
     // 결제 기능이 없어야 함
@@ -24,7 +28,7 @@ test.describe('공개 페이지', () => {
 
   test('SEO: 메타태그, 구조화 데이터, sitemap, robots', async ({ page, request }) => {
     await page.goto('/');
-    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /제이앤코슈/);
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /인테라/);
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /og-image\.png/);
     const ld = await page.locator('script[type="application/ld+json"]').first().textContent();
     expect(JSON.parse(ld || '{}').telephone).toBe(PHONE);
@@ -36,19 +40,24 @@ test.describe('공개 페이지', () => {
 
   test('제품 목록 → 상세: 가격과 전화 구매 버튼', async ({ page }) => {
     await page.goto('/products');
-    await expect(page.locator('.grid-products .p-card')).toHaveCount(7);
+    await expect(page.locator('.grid-products .p-card')).toHaveCount(32);
     await page.locator('.grid-products .p-card a').first().click();
     await expect(page.locator('.pdp__name')).toBeVisible();
     await expect(page.locator('.pdp__price')).toContainText('소비자가');
     await expect(page.locator('.pdp__buy a[href^="tel:"]')).toContainText('전화로 구매 문의');
     await expect(page.locator('.pdp__buy a[href^="sms:"]')).toBeAttached();
+    await expect(page.locator('.pdp__notice')).toContainText('24시간');
+    // 공식 상세 이미지 표시
+    await expect(page.locator('.pdp-detail__body img')).toHaveCount(1);
+    const detail = await page.locator('.pdp-detail__body img').getAttribute('src');
+    expect((await page.request.get(detail || '')).status()).toBe(200);
   });
 
   test('카탈로그: 카테고리별 전 제품 + 소비자가 + 수상 표시', async ({ page }) => {
     await page.goto('/catalog');
     await expect(page.locator('.cat-cover__title')).toContainText('INTERRA');
-    await expect(page.locator('.cat-item')).toHaveCount(7);
-    expect(await page.locator('.cat-group').count()).toBeGreaterThanOrEqual(3);
+    await expect(page.locator('.cat-item')).toHaveCount(32);
+    await expect(page.locator('.cat-group')).toHaveCount(7);
     await expect(page.locator('.cat-item', { hasText: '볼륨 에센스 프리미엄' })).toContainText('150,000원');
     await expect(page.locator('.seal--lg')).toContainText('3년 연속 대상');
     await expect(page.locator('.cat-order__phone')).toHaveText(PHONE);
@@ -116,8 +125,10 @@ test.describe('관리자', () => {
     await page.fill('input[name="category"]', '앰플');
     await page.fill('input[name="price"]', '45000');
     await page.fill('textarea[name="summary"]', 'QA 요약 문구');
-    await page.setInputFiles('[data-file-input]', 'public/img/apple-touch-icon.png');
-    await expect(page.locator('[data-new-previews] img')).toHaveCount(1);
+    await page.locator('[data-file-input]').nth(0).setInputFiles('public/img/apple-touch-icon.png');
+    await page.locator('[data-file-input]').nth(1).setInputFiles('public/img/og-image.png');
+    await expect(page.locator('[data-new-previews] img')).toHaveCount(2);
+    await expect(page.locator('[data-submit]')).toHaveText('저장하기');
     await page.click('[data-submit]');
     await expect(page.locator('.a-alert--ok')).toBeVisible();
     await expect(page.locator('.a-item h2', { hasText: 'QA 테스트 앰플' })).toBeVisible();
@@ -130,6 +141,10 @@ test.describe('관리자', () => {
     expect(src).toMatch(/^\/uploads\//);
     const img = await page.request.get(src || '');
     expect(img.status()).toBe(200);
+    await card.locator('a').first().click();
+    const detailSrc = await page.locator('.pdp-detail__body img').getAttribute('src');
+    expect(detailSrc).toMatch(/^\/uploads\//);
+    expect((await page.request.get(detailSrc || '')).status()).toBe(200);
 
     await page.goto('/admin/inquiries');
     await expect(page.locator('h1')).toHaveText('고객 문의');

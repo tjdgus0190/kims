@@ -1,7 +1,7 @@
 <%- include('_top', { title: '로그인' }) %>
 <div class="a-login">
   <form class="a-card" method="post" action="/admin/login">
-    <p class="a-logo a-logo--center"><%= settings.brandNameEn || 'J&COSU' %></p>
+    <p class="a-logo a-logo--center"><%= settings.brandNameEn || 'INTERRA' %></p>
     <h1>관리자 로그인</h1>
     <% if (!enabled) { %>
       <p class="a-alert a-alert--err">서버에 ADMIN_PASSWORD 환경변수가 설정되지 않았습니다. README 의 설정 방법을 확인해 주세요.</p>

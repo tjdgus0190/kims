@@ -1,4 +1,4 @@
-/* 제이앤코슈 — 인터랙션 & 모션 */
+/* INTERRA — 인터랙션 & 모션 */
 (function () {
   'use strict';
 

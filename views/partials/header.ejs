@@ -6,8 +6,8 @@
 <header class="site-header" data-header>
   <div class="site-header__inner">
     <a class="logo" href="/" aria-label="<%= settings.brandName %> 홈">
-      <span class="logo__en"><%= settings.brandNameEn || 'J&COSU' %></span>
-      <span class="logo__ko"><%= settings.brandName %><% if (settings.productBrand) { %> · <%= settings.productBrand %><% } %></span>
+      <span class="logo__en"><%= settings.brandNameEn || 'INTERRA' %></span>
+      <span class="logo__ko"><%= settings.brandName %></span>
     </a>
     <nav class="gnb" aria-label="주요 메뉴">
       <a href="/#story" class="gnb__link">브랜드</a>
@@ -18,7 +18,7 @@
     </nav>
     <a class="header-call" href="<%= telHref(settings.phone) %>" data-magnetic>
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
-      <span><%= settings.phone %></span>
+      <span><%= settings.phone %></span><em class="h24">24H</em>
     </a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
       <span class="sr-only">메뉴 열기</span><i></i><i></i>
@@ -37,6 +37,6 @@
   <div class="mobile-menu__foot">
     <p class="eyebrow">구매 · 상담 문의</p>
     <a class="mobile-menu__phone" href="<%= telHref(settings.phone) %>"><%= settings.phone %></a>
-    <p class="muted"><%= settings.hours %></p>
+    <p class="muted"><span class="h24">24H</span> <%= settings.hours %></p>
   </div>
 </div>

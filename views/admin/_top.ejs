@@ -12,7 +12,7 @@
 <body>
 <% if (typeof csrf !== 'undefined') { %>
 <header class="a-header">
-  <a class="a-logo" href="/admin"><%= settings.brandNameEn || 'J&COSU' %> <small>관리자</small></a>
+  <a class="a-logo" href="/admin"><%= settings.brandNameEn || 'INTERRA' %> <small>관리자</small></a>
   <nav class="a-nav">
     <a href="/admin" class="<%= path === '/admin' || path === '/admin/' || path.startsWith('/admin/products') ? 'is-active' : '' %>">상품 관리</a>
     <a href="/admin/inquiries" class="<%= path.startsWith('/admin/inquiries') ? 'is-active' : '' %>">고객 문의<% if (newCount) { %> <b class="a-count"><%= newCount %></b><% } %></a>

@@ -24,10 +24,10 @@ function organizationLd(res) {
     '@type': 'Store',
     name: s.brandName,
     alternateName: s.brandNameEn,
+    openingHours: 'Mo-Su 00:00-23:59',
     url: base + '/',
     telephone: s.phone,
     image: base + '/img/og-image.png',
-    founder: s.ceoName ? { '@type': 'Person', name: s.ceoName } : undefined,
     address: s.address ? { '@type': 'PostalAddress', streetAddress: s.address, addressCountry: 'KR' } : undefined,
     description: s.metaDescription,
   };
@@ -114,8 +114,8 @@ router.get('/catalog', (req, res) => {
     groups,
     total: products.length,
     seo: {
-      title: `${store.settings.productBrand || ''} 제품 카탈로그`.trim(),
-      description: `${store.settings.brandName} ${store.settings.productBrand || ''} 제품 카탈로그 — 전 제품 소비자가와 주요 특징을 한눈에. 구매 문의 ${store.settings.phone}`,
+      title: `${store.settings.brandName || ''} 제품 카탈로그`.trim(),
+      description: `${store.settings.brandName} ${store.settings.brandName || ''} 제품 카탈로그 — 전 제품 소비자가와 주요 특징을 한눈에. 구매 문의 ${store.settings.phone}`,
     },
   });
 });
