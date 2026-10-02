@@ -6,3 +6,4 @@ uploads/
 test-results/
 playwright-report/
 public/vendor/
+*.whl
