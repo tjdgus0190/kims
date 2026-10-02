@@ -59,6 +59,10 @@ test.describe('공개 페이지', () => {
     await expect(page.locator('.cat-item')).toHaveCount(32);
     await expect(page.locator('.cat-group')).toHaveCount(7);
     await expect(page.locator('.cat-item', { hasText: '볼륨 에센스 프리미엄' })).toContainText('150,000원');
+    await expect(page.locator('.cat-item', { hasText: '이지튠 인써마샷' })).toContainText('660,000원');
+    await expect(page.locator('.cat-item', { hasText: '어메니티 물티슈' })).toContainText('3,000원');
+    // 가격표 전 제품 반영: '상담 시 안내' 표시 없음
+    await expect(page.locator('.cat-item__price', { hasText: '상담 시 안내' })).toHaveCount(0);
     await expect(page.locator('.seal--lg')).toContainText('3년 연속 대상');
     await expect(page.locator('.cat-order__phone')).toHaveText(PHONE);
   });
