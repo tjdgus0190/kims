@@ -9,6 +9,7 @@ const chromium = process.env.PLAYWRIGHT_CHROMIUM_PATH || (require('fs').existsSy
 
 module.exports = defineConfig({
   testDir: 'tests',
+  testMatch: '**/*.spec.js',
   timeout: 30000,
   retries: 0,
   use: {

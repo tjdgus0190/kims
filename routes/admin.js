@@ -162,7 +162,8 @@ router.post('/products/:id/toggle', auth.verifyCsrf, async (req, res) => {
 
 /* ---------- 문의 ---------- */
 router.get('/inquiries', (req, res) => {
-  res.render('admin/inquiries', { inquiries: store.listInquiries() });
+  const smsReady = Boolean(process.env.SOLAPI_API_KEY && process.env.SOLAPI_API_SECRET && process.env.SMS_FROM);
+  res.render('admin/inquiries', { inquiries: store.listInquiries(), smsReady, smsTo: process.env.SMS_TO || store.settings.phone });
 });
 
 router.post('/inquiries/:id', auth.verifyCsrf, async (req, res) => {

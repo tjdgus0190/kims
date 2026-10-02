@@ -2,6 +2,7 @@
 const express = require('express');
 const store = require('../lib/store');
 const { won } = require('../lib/view');
+const { notifyInquiry } = require('../lib/notify');
 
 const router = express.Router();
 
@@ -149,23 +150,12 @@ router.post('/inquiry', async (req, res) => {
     productName: product?.name || '',
     preferredTime: String(req.body.time || '').slice(0, 40),
   });
-  await notify(inquiry);
+  // 대표 휴대폰 문자(솔라피) · 웹훅 알림 — 실패해도 접수는 완료, 결과는 문의 기록에 남김
+  const notified = await notifyInquiry(inquiry, store.settings);
+  await store.updateInquiry(inquiry.id, { notified });
   res.redirect(back + '?sent=1#inquiry');
 });
 
-/** 선택: INQUIRY_WEBHOOK_URL 이 설정되어 있으면 새 문의를 알림으로 전송 (슬랙/디스코드 등) */
-async function notify(q) {
-  const url = process.env.INQUIRY_WEBHOOK_URL;
-  if (!url) return;
-  const text = `[새 문의] ${q.name} (${q.phone})${q.productName ? ` · ${q.productName}` : ''}\n${q.message}`;
-  // 서버리스 환경에서는 응답 후 실행이 중단될 수 있어 전송 완료를 기다립니다 (최대 3초).
-  await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text, content: text }),
-    signal: AbortSignal.timeout(3000),
-  }).catch((e) => console.error('문의 알림 실패', e.message));
-}
 
 router.get('/robots.txt', (req, res) => {
   res.type('text/plain').send(`User-agent: *\nAllow: /\nDisallow: /admin\n\nSitemap: ${res.locals.siteUrl}/sitemap.xml\n`);

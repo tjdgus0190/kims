@@ -6,12 +6,20 @@
   </div>
 </div>
 
+<% if (!smsReady) { %>
+  <p class="a-notice">문자 알림이 아직 설정되지 않았습니다. 새 문의가 들어와도 문자가 가지 않으니 이 화면을 확인해 주세요. (설정 방법: README의 ‘문자 알림’)</p>
+<% } else { %>
+  <p class="a-muted" style="margin-bottom:12px">새 문의가 들어오면 <b><%= smsTo %></b> 로 문자가 발송됩니다.</p>
+<% } %>
 <div class="a-list">
   <% inquiries.forEach(function (q) { %>
   <article class="a-inq<%= q.status === 'done' ? ' is-done' : '' %>">
     <div class="a-inq__head">
       <b class="a-tag <%= q.status === 'done' ? '' : 'a-tag--new' %>"><%= q.status === 'done' ? '처리 완료' : '새 문의' %></b>
       <time class="a-muted"><%= new Date(q.createdAt).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) %></time>
+      <% const sms = q.notified && q.notified.sms; %>
+      <% if (sms === 'sent') { %><span class="a-tag a-tag--ok" title="대표 휴대폰으로 문자 발송됨">문자 발송</span>
+      <% } else if (sms && sms.indexOf('failed') === 0) { %><span class="a-tag a-tag--warn" title="<%= sms %>">문자 실패</span><% } %>
     </div>
     <h2><%= q.name %> <a class="a-phone" href="<%= telHref(q.phone) %>"><%= q.phone %></a></h2>
     <p class="a-muted">
