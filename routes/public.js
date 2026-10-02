@@ -151,7 +151,7 @@ router.post('/inquiry', async (req, res) => {
     preferredTime: String(req.body.time || '').slice(0, 40),
   });
   // 대표 휴대폰 문자(솔라피) · 웹훅 알림 — 실패해도 접수는 완료, 결과는 문의 기록에 남김
-  const notified = await notifyInquiry(inquiry, store.settings);
+  const notified = await notifyInquiry(inquiry, store.settings, { siteUrl: res.locals.siteUrl });
   await store.updateInquiry(inquiry.id, { notified });
   res.redirect(back + '?sent=1#inquiry');
 });

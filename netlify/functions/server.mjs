@@ -10,6 +10,7 @@ import 'express';
 import 'ejs';
 import 'multer';
 import '@netlify/blobs';
+import 'nodemailer';
 
 // 저장소 선택은 첫 요청 시점에 이뤄지므로 import 이후에 설정해도 됩니다.
 process.env.STORAGE ||= 'blobs';

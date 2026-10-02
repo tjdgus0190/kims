@@ -6,10 +6,11 @@
   </div>
 </div>
 
-<% if (!smsReady) { %>
-  <p class="a-notice">문자 알림이 아직 설정되지 않았습니다. 새 문의가 들어와도 문자가 가지 않으니 이 화면을 확인해 주세요. (설정 방법: README의 ‘문자 알림’)</p>
+<% if (!channels.email && !channels.sms) { %>
+  <p class="a-notice">메일 알림이 아직 설정되지 않았습니다. 새 문의가 들어와도 알림이 가지 않으니 이 화면을 확인해 주세요. (설정 방법: README의 ‘상담 신청 메일 알림’)</p>
 <% } else { %>
-  <p class="a-muted" style="margin-bottom:12px">새 문의가 들어오면 <b><%= smsTo %></b> 로 문자가 발송됩니다.</p>
+  <p class="a-muted" style="margin-bottom:12px">새 문의가 들어오면
+    <% if (channels.email) { %><b><%= mailTo %></b> 로 메일<% } %><% if (channels.email && channels.sms) { %>, <% } %><% if (channels.sms) { %><b><%= smsTo %></b> 로 문자<% } %>이 발송됩니다.</p>
 <% } %>
 <div class="a-list">
   <% inquiries.forEach(function (q) { %>
@@ -17,6 +18,9 @@
     <div class="a-inq__head">
       <b class="a-tag <%= q.status === 'done' ? '' : 'a-tag--new' %>"><%= q.status === 'done' ? '처리 완료' : '새 문의' %></b>
       <time class="a-muted"><%= new Date(q.createdAt).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) %></time>
+      <% const mail = q.notified && q.notified.email; %>
+      <% if (mail === 'sent') { %><span class="a-tag a-tag--ok" title="알림 메일 발송됨">메일 발송</span>
+      <% } else if (mail && mail.indexOf('failed') === 0) { %><span class="a-tag a-tag--warn" title="<%= mail %>">메일 실패</span><% } %>
       <% const sms = q.notified && q.notified.sms; %>
       <% if (sms === 'sent') { %><span class="a-tag a-tag--ok" title="대표 휴대폰으로 문자 발송됨">문자 발송</span>
       <% } else if (sms && sms.indexOf('failed') === 0) { %><span class="a-tag a-tag--warn" title="<%= sms %>">문자 실패</span><% } %>

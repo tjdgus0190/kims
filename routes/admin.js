@@ -6,6 +6,7 @@ const multer = require('multer');
 const store = require('../lib/store');
 const auth = require('../lib/auth');
 const backend = require('../lib/backend');
+const { channels } = require('../lib/notify');
 
 const IMAGE_TYPES = { 'image/jpeg': '.jpg', 'image/png': '.png', 'image/webp': '.webp', 'image/avif': '.avif', 'image/gif': '.gif' };
 const toArray = (v) => (v === undefined ? [] : Array.isArray(v) ? v : [v]);
@@ -15,7 +16,7 @@ const toPrice = (v) => {
 };
 
 const SETTING_FIELDS = [
-  'brandName', 'brandNameEn', 'awardBadge', 'awardTitle', 'awardCategory', 'awardYears', 'ceoName', 'phone', 'email', 'address', 'businessNumber', 'hours', 'kakaoUrl',
+  'brandName', 'brandNameEn', 'notifyEmail', 'awardBadge', 'awardTitle', 'awardCategory', 'awardYears', 'ceoName', 'phone', 'email', 'address', 'businessNumber', 'hours', 'kakaoUrl',
   'instagramUrl', 'heroEyebrow', 'heroTitle', 'heroSubtitle', 'storyTitle', 'storyText',
   'categoryNotes', 'metaTitle', 'metaDescription', 'metaKeywords', 'naverVerification', 'googleVerification',
 ];
@@ -162,8 +163,13 @@ router.post('/products/:id/toggle', auth.verifyCsrf, async (req, res) => {
 
 /* ---------- 문의 ---------- */
 router.get('/inquiries', (req, res) => {
-  const smsReady = Boolean(process.env.SOLAPI_API_KEY && process.env.SOLAPI_API_SECRET && process.env.SMS_FROM);
-  res.render('admin/inquiries', { inquiries: store.listInquiries(), smsReady, smsTo: process.env.SMS_TO || store.settings.phone });
+  const on = channels();
+  res.render('admin/inquiries', {
+    inquiries: store.listInquiries(),
+    channels: on,
+    mailTo: store.settings.notifyEmail || process.env.MAIL_TO || process.env.SMTP_USER,
+    smsTo: process.env.SMS_TO || store.settings.phone,
+  });
 });
 
 router.post('/inquiries/:id', auth.verifyCsrf, async (req, res) => {
