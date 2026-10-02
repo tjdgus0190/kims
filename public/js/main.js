@@ -11,6 +11,35 @@
 
   window.__motionReady = true;
 
+  /* ---------- 페이지 진입 시 항상 맨 위에서 시작 (주소에 #앵커가 있을 때만 예외) ---------- */
+  var lenis = null;
+  function toTop() {
+    if (location.hash.length > 1 && document.querySelector(location.hash)) return;
+    window.scrollTo(0, 0);
+    if (lenis) lenis.scrollTo(0, { immediate: true, force: true });
+  }
+  var touched = false;
+  ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (ev) {
+    window.addEventListener(ev, function () { touched = true; }, { passive: true, once: true });
+  });
+  toTop();
+  /* 이미지 로딩이 끝난 뒤에도 한 번 더 (단, 사용자가 이미 스크롤을 시작했다면 건드리지 않음) */
+  window.addEventListener('load', function () { if (!touched) toTop(); });
+  /* 뒤로가기로 캐시된 페이지가 다시 보일 때(bfcache)도 맨 위로 */
+  window.addEventListener('pageshow', function (e) { if (e.persisted) toTop(); });
+
+  /* 로고: 메인에서 누르면 부드럽게 맨 위로, 다른 페이지에서는 메인으로 이동 후 맨 위 */
+  $$('.logo').forEach(function (logo) {
+    logo.addEventListener('click', function (e) {
+      if (location.pathname === '/' || /(^|\/)(main|index)\.html$/.test(location.pathname)) {
+        e.preventDefault();
+        if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+        if (lenis) lenis.scrollTo(0, { duration: 1.2 });
+        else window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  });
+
   /* ---------- 공통 UI (모션 라이브러리 없이도 동작) ---------- */
   var header = $('[data-header]');
   var callbar = $('.callbar');
@@ -95,9 +124,9 @@
   gsap.registerPlugin(ScrollTrigger);
 
   /* 부드러운 스크롤 */
-  var lenis = null;
   if (window.Lenis) {
     lenis = new window.Lenis({ duration: 1.15, smoothWheel: true });
+    toTop();
     lenis.on('scroll', function (e) { ScrollTrigger.update(); onScroll(e.scroll); });
     gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
     gsap.ticker.lagSmoothing(0);

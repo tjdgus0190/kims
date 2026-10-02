@@ -93,6 +93,40 @@ test.describe('공개 페이지', () => {
     await expect(page.locator('.notice--ok')).toBeVisible();
   });
 
+  test('뒤로가기 · 로고 클릭 시 항상 맨 위에서 시작', async ({ page }) => {
+    await page.goto('/');
+    await page.waitForLoadState('load');
+    await page.mouse.wheel(0, 3000);
+    await page.evaluate(() => window.scrollTo(0, 2500));
+    await page.waitForTimeout(800);
+    expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(1000);
+    await page.goto('/products');
+    await page.waitForLoadState('load');
+    await page.evaluate(() => window.scrollTo(0, 1500));
+    await page.waitForTimeout(500);
+    // 뒤로가기 → 메인 맨 위
+    await page.goBack();
+    await page.waitForLoadState('load');
+    await page.waitForTimeout(600);
+    expect(await page.evaluate(() => window.scrollY)).toBeLessThan(5);
+    // 다른 페이지에서 로고 클릭 → 메인 맨 위
+    await page.goto('/catalog');
+    await page.waitForLoadState('load');
+    await page.evaluate(() => window.scrollTo(0, 1200));
+    await page.waitForTimeout(500);
+    await page.evaluate(() => document.querySelector('.logo').click());
+    await page.waitForURL('**/');
+    await page.waitForLoadState('load');
+    await page.waitForTimeout(600);
+    expect(await page.evaluate(() => window.scrollY)).toBeLessThan(5);
+    // 메인에서 아래로 내린 뒤 로고 클릭 → 맨 위로 이동
+    await page.evaluate(() => window.scrollTo(0, 2000));
+    await page.waitForTimeout(500);
+    await page.evaluate(() => document.querySelector('.logo').click());
+    await page.waitForTimeout(2000);
+    expect(await page.evaluate(() => window.scrollY)).toBeLessThan(5);
+  });
+
   test('없는 페이지는 404', async ({ page }) => {
     const res = await page.goto('/products/없는-상품');
     expect(res?.status()).toBe(404);
