@@ -36,16 +36,15 @@
 
   <section class="a-card a-grid">
     <h2 class="a-span">기본 정보</h2>
-    <label class="a-field a-span"><span>상품명 *</span><input name="name" required value="<%= p.name || '' %>" placeholder="예) 펩타이드 볼륨 마스터 에센스 3.0"></label>
-    <label class="a-field"><span>브랜드</span><input name="brand" value="<%= p.brand || '' %>" placeholder="예) 닥터펩티"></label>
+    <label class="a-field a-span"><span>상품명 *</span><input name="name" required value="<%= p.name || '' %>" placeholder="예) 인테라 에디션 펩타이드 보툴엑소 볼륨 에센스 프리미엄"></label>
+    <label class="a-field"><span>브랜드</span><input name="brand" value="<%= p.brand || '' %>" placeholder="예) 인테라"></label>
     <label class="a-field"><span>카테고리</span>
-      <input name="category" list="cats" value="<%= p.category || '' %>" placeholder="예) 에센스, 크림, 세트">
+      <input name="category" list="cats" value="<%= p.category || '' %>" placeholder="예) 스킨케어, 메이크업, 헤어케어">
       <datalist id="cats"><% categories.forEach(function (c) { %><option value="<%= c %>"><% }) %></datalist>
     </label>
-    <label class="a-field"><span>용량 / 구성</span><input name="capacity" value="<%= p.capacity || '' %>" placeholder="예) 105ml"></label>
-    <label class="a-field"><span>배지 문구 (선택)</span><input name="badge" value="<%= p.badge || '' %>" placeholder="예) BEST, NEW, SET"></label>
-    <label class="a-field"><span>판매가 (원)</span><input name="price" inputmode="numeric" value="<%= p.price || '' %>" placeholder="비워두면 ‘가격 문의’로 표시"></label>
-    <label class="a-field"><span>정가 (원, 할인 표시용 · 선택)</span><input name="originalPrice" inputmode="numeric" value="<%= p.originalPrice || '' %>" placeholder="판매가보다 높으면 할인율이 표시됩니다"></label>
+    <label class="a-field"><span>용량 / 구성</span><input name="capacity" value="<%= p.capacity || '' %>" placeholder="예) 100ml"></label>
+    <label class="a-field"><span>배지 문구 (선택)</span><input name="badge" value="<%= p.badge || '' %>" placeholder="예) BEST, NEW, SPF50+"></label>
+    <label class="a-field a-span"><span>소비자가 (원)</span><input name="price" inputmode="numeric" value="<%= p.price || '' %>" placeholder="예) 150000 · 비워두면 ‘상담 시 안내’로 표시"></label>
     <div class="a-span a-checks">
       <label class="a-check"><input type="checkbox" name="visible" <%= p.visible ? 'checked' : '' %>> 홈페이지에 노출</label>
       <label class="a-check"><input type="checkbox" name="featured" <%= p.featured ? 'checked' : '' %>> ★ 시그니처 상품 (메인 화면 노출)</label>
@@ -55,6 +54,7 @@
   <section class="a-card a-grid">
     <h2 class="a-span">상세 설명</h2>
     <label class="a-field a-span"><span>한 줄 소개 (목록·검색 결과에 표시)</span><textarea name="summary" rows="2" maxlength="200"><%= p.summary || '' %></textarea></label>
+    <label class="a-field a-span"><span>주요 포인트 <small>(한 줄에 하나씩 · 카탈로그와 상세 페이지에 표시)</small></span><textarea name="highlights" rows="4" placeholder="특허 PTD 기술 적용&#10;SPF50+ / PA+++"><%= p.highlights || '' %></textarea></label>
     <label class="a-field a-span"><span>제품 설명 <small>(빈 줄로 문단을 나눌 수 있습니다)</small></span><textarea name="description" rows="8"><%= p.description || '' %></textarea></label>
     <label class="a-field a-span"><span>사용 방법</span><textarea name="howToUse" rows="3"><%= p.howToUse || '' %></textarea></label>
     <label class="a-field a-span"><span>주요 성분</span><textarea name="ingredients" rows="3"><%= p.ingredients || '' %></textarea></label>

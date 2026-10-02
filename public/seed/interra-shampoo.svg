@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img">
+  
+  <defs>
+    <radialGradient id="bg-e" cx="50%" cy="38%" r="75%">
+      <stop offset="0" stop-color="#ece6de"/>
+      <stop offset="1" stop-color="#b5a796"/>
+    </radialGradient>
+    <linearGradient id="glass-e" x1="0" x2="1">
+      <stop offset="0" stop-color="#e8e1d8" stop-opacity=".95"/>
+      <stop offset=".18" stop-color="#fff" stop-opacity=".55"/>
+      <stop offset=".32" stop-color="#e8e1d8" stop-opacity=".9"/>
+      <stop offset=".85" stop-color="#e8e1d8" stop-opacity=".98"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".25"/>
+    </linearGradient>
+    <linearGradient id="liquid-e" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a332c" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#3a332c" stop-opacity=".95"/>
+    </linearGradient>
+    <linearGradient id="gold-e" x1="0" x2="1">
+      <stop offset="0" stop-color="#8a6a3f"/>
+      <stop offset=".35" stop-color="#e9d3a8"/>
+      <stop offset=".55" stop-color="#b8976a"/>
+      <stop offset="1" stop-color="#6e5330"/>
+    </linearGradient>
+    <linearGradient id="cap-e" x1="0" x2="1">
+      <stop offset="0" stop-color="#1c1a18"/>
+      <stop offset=".3" stop-color="#4a4541"/>
+      <stop offset="1" stop-color="#0f0e0d"/>
+    </linearGradient>
+    <filter id="soft-e" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg-e)"/>
+  <circle cx="624" cy="200" r="170" fill="#fff" opacity=".22" filter="url(#soft-e)"/>
+  <circle cx="144" cy="720" r="120" fill="#fff" opacity=".14" filter="url(#soft-e)"/>
+  <rect x="0" y="800" width="800" height="200" fill="#000" opacity=".04"/>
+  
+  <ellipse cx="400" cy="846" rx="161" ry="22.540000000000003" fill="#2a2018" opacity=".28" filter="url(#soft-e)"/>
+  <rect x="285" y="320" width="230" height="520" rx="41.4" fill="url(#cap-e)"/>
+  <rect x="308" y="346" width="11.5" height="447.2" rx="5.75" fill="#fff" opacity=".18"/>
+  <rect x="349.4" y="283.6" width="101.2" height="46.8" rx="6" fill="url(#gold-e)"/>
+  <rect x="386.2" y="231.6" width="27.599999999999998" height="57.2" fill="#111"/>
+  <path d="M 363.2 231.6 h 115 a 8.05 8.05 0 0 1 0 16.1 h -115 z" fill="#111"/>
+  <rect x="317.2" y="465.6" width="165.6" height="1.5" fill="#c9a978" opacity=".7"/>
+  
+    <text x="400" y="528" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="20.24" letter-spacing="4.6000000000000005" fill="#ead9b8">INTERRA</text>
+    <line x1="363.2" x2="436.79999999999995" y1="540.88" y2="540.88" stroke="#ead9b8" stroke-opacity=".5" stroke-width="1.5"/>
+    <text x="400" y="559.28" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="11.408" letter-spacing="2.208" fill="#ead9b8" opacity=".85">100K SALON</text>
+    <text x="400" y="575.84" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="9.200000000000001" fill="#ead9b8" opacity=".6">SHAMPOO</text>
+  <rect x="317.2" y="642.4" width="165.6" height="1.5" fill="#c9a978" opacity=".7"/>
+</svg>

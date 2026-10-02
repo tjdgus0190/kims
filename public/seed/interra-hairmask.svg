@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img">
+  
+  <defs>
+    <radialGradient id="bg-f" cx="50%" cy="38%" r="75%">
+      <stop offset="0" stop-color="#ede6dc"/>
+      <stop offset="1" stop-color="#b7a690"/>
+    </radialGradient>
+    <linearGradient id="glass-f" x1="0" x2="1">
+      <stop offset="0" stop-color="#e8e1d8" stop-opacity=".95"/>
+      <stop offset=".18" stop-color="#fff" stop-opacity=".55"/>
+      <stop offset=".32" stop-color="#e8e1d8" stop-opacity=".9"/>
+      <stop offset=".85" stop-color="#e8e1d8" stop-opacity=".98"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".25"/>
+    </linearGradient>
+    <linearGradient id="liquid-f" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a332c" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#3a332c" stop-opacity=".95"/>
+    </linearGradient>
+    <linearGradient id="gold-f" x1="0" x2="1">
+      <stop offset="0" stop-color="#8a6a3f"/>
+      <stop offset=".35" stop-color="#e9d3a8"/>
+      <stop offset=".55" stop-color="#b8976a"/>
+      <stop offset="1" stop-color="#6e5330"/>
+    </linearGradient>
+    <linearGradient id="cap-f" x1="0" x2="1">
+      <stop offset="0" stop-color="#1c1a18"/>
+      <stop offset=".3" stop-color="#4a4541"/>
+      <stop offset="1" stop-color="#0f0e0d"/>
+    </linearGradient>
+    <filter id="soft-f" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg-f)"/>
+  <circle cx="624" cy="200" r="170" fill="#fff" opacity=".22" filter="url(#soft-f)"/>
+  <circle cx="144" cy="720" r="120" fill="#fff" opacity=".14" filter="url(#soft-f)"/>
+  <rect x="0" y="800" width="800" height="200" fill="#000" opacity=".04"/>
+  
+  <ellipse cx="400" cy="826" rx="251.99999999999997" ry="35.28" fill="#2a2018" opacity=".28" filter="url(#soft-f)"/>
+  <rect x="220" y="520" width="360" height="300" rx="28.8" fill="url(#cap-f)"/>
+  <rect x="256" y="535" width="18" height="258" rx="9" fill="#fff" opacity=".18"/>
+  
+  <rect x="270.4" y="604" width="259.2" height="1.5" fill="#c9a978" opacity=".7"/>
+  
+    <text x="400" y="640" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="31.68" letter-spacing="7.2" fill="#ead9b8">INTERRA</text>
+    <line x1="342.4" x2="457.6" y1="660.16" y2="660.16" stroke="#ead9b8" stroke-opacity=".5" stroke-width="1.5"/>
+    <text x="400" y="688.96" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="17.856" letter-spacing="3.456" fill="#ead9b8" opacity=".85">100K SALON</text>
+    <text x="400" y="714.88" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="14.4" fill="#ead9b8" opacity=".6">HAIR MASK</text>
+  <rect x="270.4" y="706" width="259.2" height="1.5" fill="#c9a978" opacity=".7"/>
+</svg>

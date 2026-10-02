@@ -2,8 +2,8 @@
   
   <defs>
     <radialGradient id="bg-a" cx="50%" cy="38%" r="75%">
-      <stop offset="0" stop-color="#f6eadb"/>
-      <stop offset="1" stop-color="#d9c0a0"/>
+      <stop offset="0" stop-color="#f4e7d4"/>
+      <stop offset="1" stop-color="#cfae84"/>
     </radialGradient>
     <linearGradient id="glass-a" x1="0" x2="1">
       <stop offset="0" stop-color="#f3e2c7" stop-opacity=".95"/>
@@ -13,8 +13,8 @@
       <stop offset="1" stop-color="#000" stop-opacity=".25"/>
     </linearGradient>
     <linearGradient id="liquid-a" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#d7a96b" stop-opacity=".55"/>
-      <stop offset="1" stop-color="#d7a96b" stop-opacity=".95"/>
+      <stop offset="0" stop-color="#d9a65f" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#d9a65f" stop-opacity=".95"/>
     </linearGradient>
     <linearGradient id="gold-a" x1="0" x2="1">
       <stop offset="0" stop-color="#8a6a3f"/>
@@ -34,16 +34,15 @@
   <circle cx="144" cy="720" r="120" fill="#fff" opacity=".14" filter="url(#soft-a)"/>
   <rect x="0" y="800" width="800" height="200" fill="#000" opacity=".04"/>
   
-  <ellipse cx="400" cy="826" rx="173.6" ry="24.304000000000002" fill="#2a2018" opacity=".28" filter="url(#soft-a)"/>
-  <rect x="260" y="350" width="280" height="470" rx="33.6" fill="url(#glass-a)"/>
-  <rect x="276.8" y="481.6" width="246.4" height="319.6" rx="22.400000000000002" fill="url(#liquid-a)"/>
-  <rect x="288" y="378.2" width="16.8" height="385.4" rx="8.4" fill="#fff" opacity=".45"/>
-  <rect x="352.4" y="303" width="95.2" height="56.4" rx="6" fill="url(#gold-a)"/>
-  <path d="M 360.016 303 L 360.016 199.6 Q 400 124.4 439.984 199.6 L 439.984 303 Z" fill="url(#cap-a)"/>
-  <rect x="299.2" y="509.8" width="201.6" height="197.4" rx="4" fill="#fbf7f0" opacity=".92"/>
+  <ellipse cx="400" cy="836" rx="161" ry="22.540000000000003" fill="#2a2018" opacity=".28" filter="url(#soft-a)"/>
+  <rect x="285" y="330" width="230" height="500" rx="110.39999999999999" ry="46" fill="url(#glass-a)"/>
+  <rect x="312.6" y="360" width="16.1" height="420" rx="8.05" fill="#fff" opacity=".5"/>
+  <rect x="340.2" y="290" width="119.60000000000001" height="50" rx="8" fill="url(#gold-a)"/>
+  <rect x="383.9" y="230" width="32.2" height="65" fill="url(#cap-a)"/>
+  <path d="M 354 230 h 142.6 a 9.200000000000001 9.200000000000001 0 0 1 0 18.400000000000002 h -142.6 z" fill="url(#cap-a)"/>
   
-    <text x="400" y="570.9" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="24.192" letter-spacing="4.032" fill="#2b241d">Dr.PEPTI</text>
-    <line x1="359.68" x2="440.31999999999994" y1="585.012" y2="585.012" stroke="#2b241d" stroke-opacity=".5" stroke-width="1.5"/>
-    <text x="400" y="605.172" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.4992" letter-spacing="2.4192" fill="#2b241d" opacity=".85">VOLUME MASTER</text>
-    <text x="400" y="623.316" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10.08" fill="#2b241d" opacity=".6">ESSENCE 3.0 · 105ml</text>
+    <text x="400" y="520" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="19.228" letter-spacing="4.37" fill="#2b241d">INTERRA</text>
+    <line x1="365.04" x2="434.96000000000004" y1="532.236" y2="532.236" stroke="#2b241d" stroke-opacity=".5" stroke-width="1.5"/>
+    <text x="400" y="549.716" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10.8376" letter-spacing="2.0976000000000004" fill="#2b241d" opacity=".85">BOTULEXO VOLUME</text>
+    <text x="400" y="565.448" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="8.74" fill="#2b241d" opacity=".6">ESSENCE PREMIUM</text>
 </svg>

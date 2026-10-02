@@ -19,7 +19,7 @@
     <div class="a-item__body">
       <p class="a-muted"><%= [p.category, p.capacity].filter(Boolean).join(' · ') %><% if (!p.visible) { %> · <b class="a-tag">숨김</b><% } %><% if (p.featured) { %> · <b class="a-tag a-tag--gold">★ 시그니처</b><% } %></p>
       <h2><a href="/admin/products/<%= p.id %>"><%= p.name %></a></h2>
-      <p class="a-price"><%= p.price ? won(p.price) : '가격 문의' %><% if (p.originalPrice) { %> <del><%= won(p.originalPrice) %></del><% } %></p>
+      <p class="a-price">소비자가 <%= p.price ? won(p.price) : '미입력 (상담 시 안내로 표시)' %></p>
     </div>
     <div class="a-item__actions">
       <form method="post" action="/admin/products/<%= p.id %>/move"><input type="hidden" name="_csrf" value="<%= csrf %>"><input type="hidden" name="dir" value="up"><button class="a-icon" title="위로" <%= i === 0 ? 'disabled' : '' %>>↑</button></form>

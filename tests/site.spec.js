@@ -36,16 +36,33 @@ test.describe('공개 페이지', () => {
 
   test('제품 목록 → 상세: 가격과 전화 구매 버튼', async ({ page }) => {
     await page.goto('/products');
-    await expect(page.locator('.grid-products .p-card')).toHaveCount(6);
+    await expect(page.locator('.grid-products .p-card')).toHaveCount(7);
     await page.locator('.grid-products .p-card a').first().click();
     await expect(page.locator('.pdp__name')).toBeVisible();
-    await expect(page.locator('.pdp__price')).toContainText('원');
+    await expect(page.locator('.pdp__price')).toContainText('소비자가');
     await expect(page.locator('.pdp__buy a[href^="tel:"]')).toContainText('전화로 구매 문의');
     await expect(page.locator('.pdp__buy a[href^="sms:"]')).toBeAttached();
   });
 
+  test('카탈로그: 카테고리별 전 제품 + 소비자가 + 수상 표시', async ({ page }) => {
+    await page.goto('/catalog');
+    await expect(page.locator('.cat-cover__title')).toContainText('INTERRA');
+    await expect(page.locator('.cat-item')).toHaveCount(7);
+    expect(await page.locator('.cat-group').count()).toBeGreaterThanOrEqual(3);
+    await expect(page.locator('.cat-item', { hasText: '볼륨 에센스 프리미엄' })).toContainText('150,000원');
+    await expect(page.locator('.seal--lg')).toContainText('3년 연속 대상');
+    await expect(page.locator('.cat-order__phone')).toHaveText(PHONE);
+  });
+
+  test('메인: 수상 섹션', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('.awards .medal')).toHaveCount(3);
+    await expect(page.locator('.awards')).toContainText('고객감동브랜드대상');
+    await expect(page.locator('text=닥터펩티')).toHaveCount(0);
+  });
+
   test('가로 스크롤이 생기지 않음', async ({ page }) => {
-    for (const url of ['/', '/products', '/contact']) {
+    for (const url of ['/', '/products', '/catalog', '/contact']) {
       await page.goto(url);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
       expect(overflow, url).toBeLessThanOrEqual(1);
@@ -107,6 +124,7 @@ test.describe('관리자', () => {
 
     await page.goto('/products?category=' + encodeURIComponent('앰플'));
     const card = page.locator('.p-card', { hasText: 'QA 테스트 앰플' });
+    await expect(card).toContainText('소비자가');
     await expect(card).toContainText('45,000원');
     const src = await card.locator('img').getAttribute('src');
     expect(src).toMatch(/^\/uploads\//);

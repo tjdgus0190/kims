@@ -1,4 +1,3 @@
-<% const rate = discountRate(p); %>
 <article class="p-card" data-tilt>
   <a href="<%= productUrl(p) %>" class="p-card__link">
     <div class="p-card__media">
@@ -14,13 +13,8 @@
       <p class="p-card__meta"><%= [p.brand, p.category, p.capacity].filter(Boolean).join(' · ') %></p>
       <h3 class="p-card__name"><%= p.name %></h3>
       <p class="p-card__price">
-        <% if (p.price) { %>
-          <% if (rate) { %><span class="p-card__rate"><%= rate %>%</span><% } %>
-          <strong><%= won(p.price) %></strong>
-          <% if (rate) { %><del><%= won(p.originalPrice) %></del><% } %>
-        <% } else { %>
-          <strong>가격 문의</strong>
-        <% } %>
+        <span class="p-card__label">소비자가</span>
+        <strong><%= p.price ? won(p.price) : '상담 시 안내' %></strong>
       </p>
     </div>
   </a>

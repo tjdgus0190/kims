@@ -52,6 +52,23 @@
     });
   });
 
+  /* 카탈로그: 인쇄 / 링크 복사 */
+  function toast(msg) {
+    var t = document.createElement('div');
+    t.className = 'toast'; t.setAttribute('role', 'status'); t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(function () { t.remove(); }, 2600);
+  }
+  $$('[data-print]').forEach(function (b) { b.addEventListener('click', function () { window.print(); }); });
+  $$('[data-copy-link]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var url = location.href.split('#')[0];
+      var done = function () { toast('카탈로그 링크를 복사했습니다. 카카오톡·문자에 붙여넣어 공유하세요.'); };
+      if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, function () { window.prompt('아래 주소를 복사하세요', url); });
+      else window.prompt('아래 주소를 복사하세요', url);
+    });
+  });
+
   /* 모바일 가로 스크롤 진행바 */
   var track = $('[data-showcase-track]');
   var bar = $('[data-showcase-bar]');
@@ -152,6 +169,15 @@
       },
     });
   }
+
+  /* 수상 메달: 월계수가 돌며 펼쳐지고 연도가 떠오름 */
+  $$('[data-medal]').forEach(function (m, i) {
+    var tl = gsap.timeline({ scrollTrigger: { trigger: m, start: 'top 85%' } });
+    tl.from($('.medal__laurel', m), { rotate: -120, scale: 0.6, opacity: 0, duration: 1.6, ease: 'expo.out', delay: i * 0.15 })
+      .from($$('.medal__body > *', m), { y: 24, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08 }, '-=1.1');
+  });
+  var seal = $('.hero__seal');
+  if (seal) gsap.from(seal, { scale: 0, rotate: -90, duration: 1.4, ease: 'back.out(1.6)', delay: root.classList.contains('show-intro') ? 3.2 : 1 });
 
   /* 시그니처 제품: 데스크톱에서 가로 스크롤 고정 */
   var showcase = $('[data-showcase]');

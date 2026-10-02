@@ -101,6 +101,25 @@ router.get('/products/:slug', (req, res, next) => {
   });
 });
 
+router.get('/catalog', (req, res) => {
+  const products = store.listProducts();
+  const groups = [];
+  for (const p of products) {
+    const key = p.category || '기타';
+    let g = groups.find((x) => x.name === key);
+    if (!g) groups.push((g = { name: key, items: [] }));
+    g.items.push(p);
+  }
+  res.render('catalog', {
+    groups,
+    total: products.length,
+    seo: {
+      title: `${store.settings.productBrand || ''} 제품 카탈로그`.trim(),
+      description: `${store.settings.brandName} ${store.settings.productBrand || ''} 제품 카탈로그 — 전 제품 소비자가와 주요 특징을 한눈에. 구매 문의 ${store.settings.phone}`,
+    },
+  });
+});
+
 router.get('/contact', (req, res) => {
   res.render('contact', {
     products: store.listProducts(),
@@ -157,6 +176,7 @@ router.get('/sitemap.xml', (req, res) => {
   const urls = [
     { loc: '/', priority: '1.0' },
     { loc: '/products', priority: '0.9' },
+    { loc: '/catalog', priority: '0.9' },
     { loc: '/contact', priority: '0.7' },
     ...store.listProducts().map((p) => ({ loc: res.locals.productUrl(p), lastmod: p.updatedAt, priority: '0.8' })),
   ];

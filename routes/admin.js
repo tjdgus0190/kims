@@ -15,7 +15,7 @@ const toPrice = (v) => {
 };
 
 const SETTING_FIELDS = [
-  'brandName', 'brandNameEn', 'ceoName', 'phone', 'email', 'address', 'businessNumber', 'hours', 'kakaoUrl',
+  'brandName', 'brandNameEn', 'productBrand', 'productBrandEn', 'awardBadge', 'awardTitle', 'awardCategory', 'awardYears', 'ceoName', 'phone', 'email', 'address', 'businessNumber', 'hours', 'kakaoUrl',
   'instagramUrl', 'heroEyebrow', 'heroTitle', 'heroSubtitle', 'storyTitle', 'storyText',
   'metaTitle', 'metaDescription', 'metaKeywords', 'naverVerification', 'googleVerification',
 ];
@@ -106,7 +106,7 @@ async function productFromBody(req, existing = { images: [] }) {
     howToUse: String(b.howToUse || '').trim(),
     ingredients: String(b.ingredients || '').trim(),
     price: toPrice(b.price),
-    originalPrice: toPrice(b.originalPrice),
+    highlights: String(b.highlights || '').trim(),
     featured: b.featured === 'on',
     visible: b.visible === 'on',
     images: [...kept, ...uploaded],

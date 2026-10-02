@@ -7,11 +7,12 @@
   <div class="site-header__inner">
     <a class="logo" href="/" aria-label="<%= settings.brandName %> 홈">
       <span class="logo__en"><%= settings.brandNameEn || 'J&COSU' %></span>
-      <span class="logo__ko"><%= settings.brandName %></span>
+      <span class="logo__ko"><%= settings.brandName %><% if (settings.productBrand) { %> · <%= settings.productBrand %><% } %></span>
     </a>
     <nav class="gnb" aria-label="주요 메뉴">
       <a href="/#story" class="gnb__link">브랜드</a>
       <a href="/products" class="gnb__link<%= path.startsWith('/products') ? ' is-active' : '' %>">제품</a>
+      <a href="/catalog" class="gnb__link<%= path === '/catalog' ? ' is-active' : '' %>">카탈로그</a>
       <a href="/#how" class="gnb__link">구매 안내</a>
       <a href="/contact" class="gnb__link<%= path === '/contact' ? ' is-active' : '' %>">문의하기</a>
     </nav>
@@ -29,6 +30,7 @@
   <nav aria-label="모바일 메뉴">
     <a href="/#story">브랜드</a>
     <a href="/products">제품</a>
+    <a href="/catalog">카탈로그</a>
     <a href="/#how">구매 안내</a>
     <a href="/contact">문의하기</a>
   </nav>
