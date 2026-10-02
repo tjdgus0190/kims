@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img">
+  
+  <defs>
+    <radialGradient id="bg-b" cx="50%" cy="38%" r="75%">
+      <stop offset="0" stop-color="#f4ece6"/>
+      <stop offset="1" stop-color="#cdb9ad"/>
+    </radialGradient>
+    <linearGradient id="glass-b" x1="0" x2="1">
+      <stop offset="0" stop-color="#efe3db" stop-opacity=".95"/>
+      <stop offset=".18" stop-color="#fff" stop-opacity=".55"/>
+      <stop offset=".32" stop-color="#efe3db" stop-opacity=".9"/>
+      <stop offset=".85" stop-color="#efe3db" stop-opacity=".98"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".25"/>
+    </linearGradient>
+    <linearGradient id="liquid-b" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c99f86" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#c99f86" stop-opacity=".95"/>
+    </linearGradient>
+    <linearGradient id="gold-b" x1="0" x2="1">
+      <stop offset="0" stop-color="#8a6a3f"/>
+      <stop offset=".35" stop-color="#e9d3a8"/>
+      <stop offset=".55" stop-color="#b8976a"/>
+      <stop offset="1" stop-color="#6e5330"/>
+    </linearGradient>
+    <linearGradient id="cap-b" x1="0" x2="1">
+      <stop offset="0" stop-color="#1c1a18"/>
+      <stop offset=".3" stop-color="#4a4541"/>
+      <stop offset="1" stop-color="#0f0e0d"/>
+    </linearGradient>
+    <filter id="soft-b" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg-b)"/>
+  <circle cx="624" cy="200" r="170" fill="#fff" opacity=".22" filter="url(#soft-b)"/>
+  <circle cx="144" cy="720" r="120" fill="#fff" opacity=".14" filter="url(#soft-b)"/>
+  <rect x="0" y="800" width="800" height="200" fill="#000" opacity=".04"/>
+  
+  <ellipse cx="400" cy="826" rx="167.4" ry="23.436000000000003" fill="#2a2018" opacity=".28" filter="url(#soft-b)"/>
+  <rect x="265" y="370" width="270" height="450" rx="32.4" fill="url(#glass-b)"/>
+  <rect x="281.2" y="496" width="237.6" height="306" rx="21.6" fill="url(#liquid-b)"/>
+  <rect x="292" y="397" width="16.2" height="369" rx="8.1" fill="#fff" opacity=".45"/>
+  <rect x="354.1" y="325" width="91.80000000000001" height="54" rx="6" fill="url(#gold-b)"/>
+  <path d="M 361.444 325 L 361.444 226 Q 400 154 438.556 226 L 438.556 325 Z" fill="url(#cap-b)"/>
+  <rect x="302.8" y="523" width="194.4" height="189" rx="4" fill="#fbf7f0" opacity=".92"/>
+  
+    <text x="400" y="581.5" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="23.328" letter-spacing="3.8880000000000003" fill="#2b241d">Dr.PEPTI</text>
+    <line x1="361.12" x2="438.88" y1="595.108" y2="595.108" stroke="#2b241d" stroke-opacity=".5" stroke-width="1.5"/>
+    <text x="400" y="614.548" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.0528" letter-spacing="2.3328" fill="#2b241d" opacity=".85">VOLUME ESSENCE</text>
+    <text x="400" y="632.044" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="9.72" fill="#2b241d" opacity=".6">2.0 · 100ml</text>
+</svg>

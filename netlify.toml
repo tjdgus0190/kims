@@ -1,0 +1,26 @@
+# Netlify 배포 설정
+# - 정적 파일(public/)은 CDN 에서 바로 제공
+# - 그 외 모든 요청(페이지, 관리자, 문의 접수)은 netlify/functions/server.mjs 가 처리
+#   (라우팅은 함수 파일의 config.path = "/*", preferStatic = true 로 지정)
+
+[build]
+  command = "npm run build"
+  publish = "public"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["views/**", "data/seed.json"]
+
+[[headers]]
+  for = "/vendor/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/seed/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

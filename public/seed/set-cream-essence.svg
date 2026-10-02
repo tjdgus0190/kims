@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img">
+  
+  <defs>
+    <radialGradient id="bg-e" cx="50%" cy="38%" r="75%">
+      <stop offset="0" stop-color="#f5ebe1"/>
+      <stop offset="1" stop-color="#cdb39a"/>
+    </radialGradient>
+    <linearGradient id="glass-e" x1="0" x2="1">
+      <stop offset="0" stop-color="#f3e5d6" stop-opacity=".95"/>
+      <stop offset=".18" stop-color="#fff" stop-opacity=".55"/>
+      <stop offset=".32" stop-color="#f3e5d6" stop-opacity=".9"/>
+      <stop offset=".85" stop-color="#f3e5d6" stop-opacity=".98"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".25"/>
+    </linearGradient>
+    <linearGradient id="liquid-e" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cf9f74" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#cf9f74" stop-opacity=".95"/>
+    </linearGradient>
+    <linearGradient id="gold-e" x1="0" x2="1">
+      <stop offset="0" stop-color="#8a6a3f"/>
+      <stop offset=".35" stop-color="#e9d3a8"/>
+      <stop offset=".55" stop-color="#b8976a"/>
+      <stop offset="1" stop-color="#6e5330"/>
+    </linearGradient>
+    <linearGradient id="cap-e" x1="0" x2="1">
+      <stop offset="0" stop-color="#1c1a18"/>
+      <stop offset=".3" stop-color="#4a4541"/>
+      <stop offset="1" stop-color="#0f0e0d"/>
+    </linearGradient>
+    <filter id="soft-e" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg-e)"/>
+  <circle cx="624" cy="200" r="170" fill="#fff" opacity=".22" filter="url(#soft-e)"/>
+  <circle cx="144" cy="720" r="120" fill="#fff" opacity=".14" filter="url(#soft-e)"/>
+  <rect x="0" y="800" width="800" height="200" fill="#000" opacity=".04"/>
+  
+  <ellipse cx="290" cy="826" rx="136.4" ry="19.096000000000004" fill="#2a2018" opacity=".28" filter="url(#soft-e)"/>
+  <rect x="180" y="420" width="220" height="400" rx="26.4" fill="url(#glass-e)"/>
+  <rect x="193.2" y="532" width="193.6" height="272" rx="17.6" fill="url(#liquid-e)"/>
+  <rect x="202" y="444" width="13.2" height="328" rx="6.6" fill="#fff" opacity=".45"/>
+  <rect x="252.6" y="380" width="74.80000000000001" height="48" rx="6" fill="url(#gold-e)"/>
+  <path d="M 258.584 380 L 258.584 292 Q 290 228 321.416 292 L 321.416 380 Z" fill="url(#cap-e)"/>
+  <rect x="210.8" y="556" width="158.4" height="168" rx="4" fill="#fbf7f0" opacity=".92"/>
+  
+    <text x="290" y="608" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="19.008" letter-spacing="3.168" fill="#2b241d">Dr.PEPTI</text>
+    <line x1="258.32" x2="321.68" y1="619.088" y2="619.088" stroke="#2b241d" stroke-opacity=".5" stroke-width="1.5"/>
+    <text x="290" y="634.928" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="9.8208" letter-spacing="1.9008" fill="#2b241d" opacity=".85">VOLUME</text>
+    <text x="290" y="649.184" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="7.920000000000001" fill="#2b241d" opacity=".6">ESSENCE 2.0</text>
+  <ellipse cx="540" cy="836" rx="150" ry="21.000000000000004" fill="#2a2018" opacity=".28" filter="url(#soft-e)"/>
+  <rect x="415" y="708.4" width="250" height="121.60000000000001" rx="20" fill="url(#glass-e)"/>
+  <rect x="430" y="718.4" width="10" height="97.28000000000002" rx="6" fill="#fff" opacity=".5"/>
+  <rect x="410" y="640" width="260" height="68.39999999999999" rx="12.5" fill="url(#gold-e)"/>
+  <rect x="410" y="700.4" width="260" height="8" fill="#000" opacity=".15"/>
+  
+    <text x="540" y="752.1759999999999" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="21" letter-spacing="3.5" fill="#2b241d">Dr.PEPTI</text>
+    <line x1="505" x2="575" y1="764.4259999999999" y2="764.4259999999999" stroke="#2b241d" stroke-opacity=".5" stroke-width="1.5"/>
+    <text x="540" y="781.9259999999999" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="10.85" letter-spacing="2.1" fill="#2b241d" opacity=".85">SILK LAYER</text>
+    <text x="540" y="797.6759999999999" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="8.75" fill="#2b241d" opacity=".6">CREAM</text>
+</svg>

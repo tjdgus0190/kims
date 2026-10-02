@@ -1,0 +1,17 @@
+<%- include('_top', { title: '로그인' }) %>
+<div class="a-login">
+  <form class="a-card" method="post" action="/admin/login">
+    <p class="a-logo a-logo--center"><%= settings.brandNameEn || 'J&COSU' %></p>
+    <h1>관리자 로그인</h1>
+    <% if (!enabled) { %>
+      <p class="a-alert a-alert--err">서버에 ADMIN_PASSWORD 환경변수가 설정되지 않았습니다. README 의 설정 방법을 확인해 주세요.</p>
+    <% } else if (error === 'limit') { %>
+      <p class="a-alert a-alert--err">로그인 시도가 너무 많습니다. 15분 후 다시 시도해 주세요.</p>
+    <% } else if (error) { %>
+      <p class="a-alert a-alert--err">비밀번호가 올바르지 않습니다.</p>
+    <% } %>
+    <label class="a-field"><span>비밀번호</span><input type="password" name="password" required autofocus autocomplete="current-password"></label>
+    <button class="a-btn a-btn--block" type="submit">로그인</button>
+  </form>
+</div>
+<%- include('_bottom') %>

@@ -1,0 +1,76 @@
+<% const p = product; const isNew = !p.id; %>
+<%- include('_top', { title: isNew ? '새 상품' : p.name }) %>
+<div class="a-head">
+  <div>
+    <a class="a-back" href="/admin">← 상품 목록</a>
+    <h1><%= isNew ? '새 상품 등록' : '상품 수정' %></h1>
+  </div>
+  <% if (!isNew && p.visible) { %><a class="a-btn a-btn--ghost" href="<%= productUrl(p) %>" target="_blank" rel="noopener">홈페이지에서 보기 ↗</a><% } %>
+</div>
+
+<form class="a-form" method="post" action="<%= isNew ? '/admin/products' : '/admin/products/' + p.id %>" enctype="multipart/form-data" data-product-form>
+  <input type="hidden" name="_csrf" value="<%= csrf %>">
+
+  <section class="a-card">
+    <h2>상품 사진</h2>
+    <p class="a-muted">첫 번째 사진이 대표 이미지로 사용됩니다. 세로형(4:5) 사진을 권장하며, 큰 사진은 업로드 시 자동으로 최적화됩니다.</p>
+    <div class="a-images" data-images>
+      <% (p.images || []).forEach(function (src) { %>
+        <figure class="a-img" data-existing>
+          <img src="<%= src %>" alt="">
+          <input type="hidden" name="existingImages" value="<%= src %>">
+          <div class="a-img__tools">
+            <button type="button" data-img-left title="앞으로">←</button>
+            <button type="button" data-img-right title="뒤로">→</button>
+            <button type="button" data-img-remove title="삭제">✕</button>
+          </div>
+        </figure>
+      <% }) %>
+      <label class="a-img a-img--add">
+        <input type="file" name="images" accept="image/jpeg,image/png,image/webp,image/avif" multiple data-file-input>
+        <span>+ 사진 추가</span>
+      </label>
+    </div>
+    <div class="a-images a-images--new" data-new-previews></div>
+  </section>
+
+  <section class="a-card a-grid">
+    <h2 class="a-span">기본 정보</h2>
+    <label class="a-field a-span"><span>상품명 *</span><input name="name" required value="<%= p.name || '' %>" placeholder="예) 펩타이드 볼륨 마스터 에센스 3.0"></label>
+    <label class="a-field"><span>브랜드</span><input name="brand" value="<%= p.brand || '' %>" placeholder="예) 닥터펩티"></label>
+    <label class="a-field"><span>카테고리</span>
+      <input name="category" list="cats" value="<%= p.category || '' %>" placeholder="예) 에센스, 크림, 세트">
+      <datalist id="cats"><% categories.forEach(function (c) { %><option value="<%= c %>"><% }) %></datalist>
+    </label>
+    <label class="a-field"><span>용량 / 구성</span><input name="capacity" value="<%= p.capacity || '' %>" placeholder="예) 105ml"></label>
+    <label class="a-field"><span>배지 문구 (선택)</span><input name="badge" value="<%= p.badge || '' %>" placeholder="예) BEST, NEW, SET"></label>
+    <label class="a-field"><span>판매가 (원)</span><input name="price" inputmode="numeric" value="<%= p.price || '' %>" placeholder="비워두면 ‘가격 문의’로 표시"></label>
+    <label class="a-field"><span>정가 (원, 할인 표시용 · 선택)</span><input name="originalPrice" inputmode="numeric" value="<%= p.originalPrice || '' %>" placeholder="판매가보다 높으면 할인율이 표시됩니다"></label>
+    <div class="a-span a-checks">
+      <label class="a-check"><input type="checkbox" name="visible" <%= p.visible ? 'checked' : '' %>> 홈페이지에 노출</label>
+      <label class="a-check"><input type="checkbox" name="featured" <%= p.featured ? 'checked' : '' %>> ★ 시그니처 상품 (메인 화면 노출)</label>
+    </div>
+  </section>
+
+  <section class="a-card a-grid">
+    <h2 class="a-span">상세 설명</h2>
+    <label class="a-field a-span"><span>한 줄 소개 (목록·검색 결과에 표시)</span><textarea name="summary" rows="2" maxlength="200"><%= p.summary || '' %></textarea></label>
+    <label class="a-field a-span"><span>제품 설명 <small>(빈 줄로 문단을 나눌 수 있습니다)</small></span><textarea name="description" rows="8"><%= p.description || '' %></textarea></label>
+    <label class="a-field a-span"><span>사용 방법</span><textarea name="howToUse" rows="3"><%= p.howToUse || '' %></textarea></label>
+    <label class="a-field a-span"><span>주요 성분</span><textarea name="ingredients" rows="3"><%= p.ingredients || '' %></textarea></label>
+    <label class="a-field a-span"><span>주소(URL) 이름 <small>(비워두면 상품명으로 자동 생성)</small></span><input name="slug" value="<%= p.slug || '' %>"></label>
+  </section>
+
+  <div class="a-actions">
+    <button class="a-btn" type="submit" data-submit>저장하기</button>
+    <a class="a-btn a-btn--ghost" href="/admin">취소</a>
+  </div>
+</form>
+
+<% if (!isNew) { %>
+<form class="a-danger" method="post" action="/admin/products/<%= p.id %>/delete" data-confirm="‘<%= p.name %>’ 상품을 삭제할까요? 되돌릴 수 없습니다.">
+  <input type="hidden" name="_csrf" value="<%= csrf %>">
+  <button class="a-btn a-btn--danger" type="submit">이 상품 삭제</button>
+</form>
+<% } %>
+<%- include('_bottom') %>

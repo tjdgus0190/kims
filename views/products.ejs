@@ -1,0 +1,48 @@
+<%- include('partials/head') %>
+<%- include('partials/header', { bodyClass: 'is-sub' }) %>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow" data-reveal>PRODUCTS</p>
+      <h1 class="h1" data-split>제품 안내</h1>
+      <p class="lead" data-reveal>모든 제품은 대표번호 <a href="<%= telHref(settings.phone) %>"><%= settings.phone %></a> 로 상담 후 구매하실 수 있습니다.</p>
+    </div>
+  </section>
+
+  <section class="catalog">
+    <div class="container">
+      <% if (categories.length > 1) { %>
+      <nav class="filter" aria-label="카테고리" data-reveal>
+        <a href="/products" class="filter__chip<%= !category ? ' is-active' : '' %>">전체</a>
+        <% categories.forEach(function (c) { %>
+          <a href="/products?category=<%= encodeURIComponent(c) %>" class="filter__chip<%= category === c ? ' is-active' : '' %>"><%= c %></a>
+        <% }) %>
+      </nav>
+      <% } %>
+
+      <% if (products.length) { %>
+        <div class="grid-products">
+          <% products.forEach(function (p) { %>
+            <div data-reveal><%- include('partials/product-card', { p }) %></div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <p class="empty">등록된 제품이 없습니다.</p>
+      <% } %>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container cta-band__inner" data-reveal>
+      <h2 class="h2">어떤 제품이 맞을지 고민되시나요?</h2>
+      <p>피부 고민을 말씀해 주시면 꼭 맞는 제품을 추천해 드립니다.</p>
+      <div class="cta-band__btns">
+        <a class="btn btn--light" href="<%= telHref(settings.phone) %>" data-magnetic>전화 상담 <%= settings.phone %></a>
+        <a class="btn btn--ghost-light" href="/contact#inquiry" data-magnetic>상담 신청 남기기</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<%- include('partials/footer') %>

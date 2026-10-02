@@ -1,0 +1,27 @@
+<% const rate = discountRate(p); %>
+<article class="p-card" data-tilt>
+  <a href="<%= productUrl(p) %>" class="p-card__link">
+    <div class="p-card__media">
+      <% if (p.badge) { %><span class="p-card__badge"><%= p.badge %></span><% } %>
+      <% if (p.images && p.images[0]) { %>
+        <img src="<%= p.images[0] %>" alt="<%= p.name %>" loading="lazy" decoding="async" width="800" height="1000">
+      <% } else { %>
+        <div class="p-card__noimg" aria-hidden="true"><%= (settings.brandNameEn || 'J&COSU') %></div>
+      <% } %>
+      <span class="p-card__view">자세히 보기</span>
+    </div>
+    <div class="p-card__body">
+      <p class="p-card__meta"><%= [p.brand, p.category, p.capacity].filter(Boolean).join(' · ') %></p>
+      <h3 class="p-card__name"><%= p.name %></h3>
+      <p class="p-card__price">
+        <% if (p.price) { %>
+          <% if (rate) { %><span class="p-card__rate"><%= rate %>%</span><% } %>
+          <strong><%= won(p.price) %></strong>
+          <% if (rate) { %><del><%= won(p.originalPrice) %></del><% } %>
+        <% } else { %>
+          <strong>가격 문의</strong>
+        <% } %>
+      </p>
+    </div>
+  </a>
+</article>

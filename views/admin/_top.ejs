@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title><%= typeof title !== 'undefined' ? title + ' | ' : '' %>관리자 · <%= settings.brandName %></title>
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<% if (typeof csrf !== 'undefined') { %>
+<header class="a-header">
+  <a class="a-logo" href="/admin"><%= settings.brandNameEn || 'J&COSU' %> <small>관리자</small></a>
+  <nav class="a-nav">
+    <a href="/admin" class="<%= path === '/admin' || path === '/admin/' || path.startsWith('/admin/products') ? 'is-active' : '' %>">상품 관리</a>
+    <a href="/admin/inquiries" class="<%= path.startsWith('/admin/inquiries') ? 'is-active' : '' %>">고객 문의<% if (newCount) { %> <b class="a-count"><%= newCount %></b><% } %></a>
+    <a href="/admin/settings" class="<%= path.startsWith('/admin/settings') ? 'is-active' : '' %>">사이트 정보</a>
+    <a href="/" target="_blank" rel="noopener">홈페이지 보기 ↗</a>
+  </nav>
+  <form method="post" action="/admin/logout"><button class="a-btn a-btn--text" type="submit">로그아웃</button></form>
+</header>
+<% } %>
+<main class="a-main">

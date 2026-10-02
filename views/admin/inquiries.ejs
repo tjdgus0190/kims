@@ -1,0 +1,39 @@
+<%- include('_top', { title: '고객 문의' }) %>
+<div class="a-head">
+  <div>
+    <h1>고객 문의</h1>
+    <p class="a-muted">홈페이지 ‘상담 신청’으로 접수된 문의입니다. 연락 후 ‘처리 완료’로 표시해 주세요.</p>
+  </div>
+</div>
+
+<div class="a-list">
+  <% inquiries.forEach(function (q) { %>
+  <article class="a-inq<%= q.status === 'done' ? ' is-done' : '' %>">
+    <div class="a-inq__head">
+      <b class="a-tag <%= q.status === 'done' ? '' : 'a-tag--new' %>"><%= q.status === 'done' ? '처리 완료' : '새 문의' %></b>
+      <time class="a-muted"><%= new Date(q.createdAt).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) %></time>
+    </div>
+    <h2><%= q.name %> <a class="a-phone" href="<%= telHref(q.phone) %>"><%= q.phone %></a></h2>
+    <p class="a-muted">
+      <% if (q.productName) { %>관심 제품: <b><%= q.productName %></b><% } %>
+      <% if (q.preferredTime) { %> · 통화 희망: <%= q.preferredTime %><% } %>
+    </p>
+    <% if (q.message) { %><p class="a-inq__msg"><%= q.message %></p><% } %>
+    <form method="post" action="/admin/inquiries/<%= q.id %>" class="a-inq__form">
+      <input type="hidden" name="_csrf" value="<%= csrf %>">
+      <input name="memo" value="<%= q.memo || '' %>" placeholder="메모 (예: 10/3 통화 완료, 2개 주문)">
+      <select name="status">
+        <option value="new" <%= q.status !== 'done' ? 'selected' : '' %>>새 문의</option>
+        <option value="done" <%= q.status === 'done' ? 'selected' : '' %>>처리 완료</option>
+      </select>
+      <button class="a-btn a-btn--sm" type="submit">저장</button>
+    </form>
+    <form method="post" action="/admin/inquiries/<%= q.id %>/delete" data-confirm="이 문의를 삭제할까요?">
+      <input type="hidden" name="_csrf" value="<%= csrf %>">
+      <button class="a-btn a-btn--text a-btn--sm" type="submit">삭제</button>
+    </form>
+  </article>
+  <% }) %>
+  <% if (!inquiries.length) { %><p class="a-empty">아직 접수된 문의가 없습니다.</p><% } %>
+</div>
+<%- include('_bottom') %>

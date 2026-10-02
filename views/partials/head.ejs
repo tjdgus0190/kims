@@ -1,0 +1,55 @@
+<%
+  const s = settings;
+  const pageTitle = seo && seo.title ? `${seo.title} | ${s.brandName}` : (s.metaTitle || s.brandName);
+  const pageDesc = (seo && seo.description) || s.metaDescription || '';
+  const ogImage = absUrl((seo && seo.image) || '/img/og-image.png');
+  const canonical = siteUrl + path;
+%>
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title><%= pageTitle %></title>
+  <meta name="description" content="<%= pageDesc %>">
+  <% if (s.metaKeywords) { %><meta name="keywords" content="<%= s.metaKeywords %>"><% } %>
+  <% if (seo && seo.noindex) { %><meta name="robots" content="noindex"><% } else { %><link rel="canonical" href="<%= canonical %>"><% } %>
+  <% if (s.naverVerification) { %><meta name="naver-site-verification" content="<%= s.naverVerification %>"><% } %>
+  <% if (s.googleVerification) { %><meta name="google-site-verification" content="<%= s.googleVerification %>"><% } %>
+
+  <meta property="og:type" content="<%= (seo && seo.type) || 'website' %>">
+  <meta property="og:site_name" content="<%= s.brandName %>">
+  <meta property="og:title" content="<%= pageTitle %>">
+  <meta property="og:description" content="<%= pageDesc %>">
+  <meta property="og:url" content="<%= canonical %>">
+  <meta property="og:image" content="<%= ogImage %>">
+  <meta property="og:locale" content="ko_KR">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="theme-color" content="#f6f1ea">
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/vendor/lenis/lenis.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script>
+    (function (d) {
+      var c = d.documentElement.classList;
+      c.add('js');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) c.add('reduced-motion');
+      try { if (!reduce && !sessionStorage.getItem('jc-intro')) c.add('show-intro'); } catch (e) {}
+      /* 스크립트를 불러오지 못해도 콘텐츠가 보이도록 안전장치 */
+      setTimeout(function () { if (!window.__motionReady) { c.remove('js', 'show-intro'); } }, 4000);
+    })(document);
+  </script>
+
+  <% (seo && seo.jsonLd || []).forEach(function (ld) { %>
+  <script type="application/ld+json"><%- JSON.stringify(ld).replace(/</g, '\\u003c') %></script>
+  <% }) %>
+</head>

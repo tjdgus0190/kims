@@ -1,0 +1,48 @@
+<%- include('_top', { title: '사이트 정보' }) %>
+<% const s = settings;
+   const field = function (name, label, opts) { opts = opts || {}; return { name: name, label: label, opts: opts }; }; %>
+<div class="a-head">
+  <div>
+    <h1>사이트 정보</h1>
+    <p class="a-muted">대표번호, 사업자 정보, 메인 문구, 검색 노출 정보를 수정합니다.</p>
+  </div>
+</div>
+<% if (saved) { %><p class="a-alert a-alert--ok">저장되었습니다.</p><% } %>
+
+<form class="a-form" method="post" action="/admin/settings">
+  <input type="hidden" name="_csrf" value="<%= csrf %>">
+  <%
+    const groups = [
+      ['기본 정보', [
+        field('brandName', '상호 (한글)'), field('brandNameEn', '브랜드 영문 표기'), field('ceoName', '대표자명'),
+        field('phone', '대표번호 (구매 문의 연결 번호)'), field('hours', '상담 가능 시간'), field('email', '이메일 (선택)'),
+        field('businessNumber', '사업자등록번호 (선택)'), field('address', '주소 (선택)'),
+        field('kakaoUrl', '카카오톡 채널 링크 (선택)'), field('instagramUrl', '인스타그램 링크 (선택)'),
+      ]],
+      ['메인 화면 문구', [
+        field('heroEyebrow', '상단 작은 문구'), field('heroTitle', '메인 제목 (줄바꿈 = 엔터)', { area: 2 }),
+        field('heroSubtitle', '메인 소개 문구', { area: 3 }), field('storyTitle', '브랜드 스토리 제목'),
+        field('storyText', '브랜드 스토리 본문 (빈 줄로 문단 구분)', { area: 7 }),
+      ]],
+      ['검색 노출 (SEO)', [
+        field('metaTitle', '검색 결과 제목'), field('metaDescription', '검색 결과 설명 (80~120자 권장)', { area: 3 }),
+        field('metaKeywords', '검색 키워드 (쉼표로 구분)', { area: 2 }),
+        field('naverVerification', '네이버 서치어드바이저 인증 코드 (content 값)'),
+        field('googleVerification', '구글 서치콘솔 인증 코드 (content 값)'),
+      ]],
+    ];
+  %>
+  <% groups.forEach(function (g) { %>
+  <section class="a-card a-grid">
+    <h2 class="a-span"><%= g[0] %></h2>
+    <% g[1].forEach(function (f) { %>
+      <label class="a-field<%= f.opts.area ? ' a-span' : '' %>"><span><%= f.label %></span>
+        <% if (f.opts.area) { %><textarea name="<%= f.name %>" rows="<%= f.opts.area %>"><%= s[f.name] || '' %></textarea>
+        <% } else { %><input name="<%= f.name %>" value="<%= s[f.name] || '' %>"><% } %>
+      </label>
+    <% }) %>
+  </section>
+  <% }) %>
+  <div class="a-actions"><button class="a-btn" type="submit">저장하기</button></div>
+</form>
+<%- include('_bottom') %>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img">
+  
+  <defs>
+    <radialGradient id="bg-d" cx="50%" cy="38%" r="75%">
+      <stop offset="0" stop-color="#f7efe9"/>
+      <stop offset="1" stop-color="#d4bfb4"/>
+    </radialGradient>
+    <linearGradient id="glass-d" x1="0" x2="1">
+      <stop offset="0" stop-color="#f9f4ef" stop-opacity=".95"/>
+      <stop offset=".18" stop-color="#fff" stop-opacity=".55"/>
+      <stop offset=".32" stop-color="#f9f4ef" stop-opacity=".9"/>
+      <stop offset=".85" stop-color="#f9f4ef" stop-opacity=".98"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".25"/>
+    </linearGradient>
+    <linearGradient id="liquid-d" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#efe0d2" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#efe0d2" stop-opacity=".95"/>
+    </linearGradient>
+    <linearGradient id="gold-d" x1="0" x2="1">
+      <stop offset="0" stop-color="#8a6a3f"/>
+      <stop offset=".35" stop-color="#e9d3a8"/>
+      <stop offset=".55" stop-color="#b8976a"/>
+      <stop offset="1" stop-color="#6e5330"/>
+    </linearGradient>
+    <linearGradient id="cap-d" x1="0" x2="1">
+      <stop offset="0" stop-color="#1c1a18"/>
+      <stop offset=".3" stop-color="#4a4541"/>
+      <stop offset="1" stop-color="#0f0e0d"/>
+    </linearGradient>
+    <filter id="soft-d" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg-d)"/>
+  <circle cx="624" cy="200" r="170" fill="#fff" opacity=".22" filter="url(#soft-d)"/>
+  <circle cx="144" cy="720" r="120" fill="#fff" opacity=".14" filter="url(#soft-d)"/>
+  <rect x="0" y="800" width="800" height="200" fill="#000" opacity=".04"/>
+  
+  <ellipse cx="400" cy="806" rx="216" ry="30.240000000000002" fill="#2a2018" opacity=".28" filter="url(#soft-d)"/>
+  <rect x="220" y="627.2" width="360" height="172.8" rx="28.8" fill="url(#glass-d)"/>
+  <rect x="241.6" y="637.2" width="14.4" height="138.24" rx="6" fill="#fff" opacity=".5"/>
+  <rect x="212.8" y="530" width="374.40000000000003" height="97.2" rx="18" fill="url(#gold-d)"/>
+  <rect x="212.8" y="619.2" width="374.40000000000003" height="8" fill="#000" opacity=".15"/>
+  
+    <text x="400" y="689.408" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="30.239999999999995" letter-spacing="5.039999999999999" fill="#2b241d">Dr.PEPTI</text>
+    <line x1="349.6" x2="450.4" y1="707.048" y2="707.048" stroke="#2b241d" stroke-opacity=".5" stroke-width="1.5"/>
+    <text x="400" y="732.248" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15.623999999999999" letter-spacing="3.0239999999999996" fill="#2b241d" opacity=".85">SILK LAYER</text>
+    <text x="400" y="754.928" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="12.6" fill="#2b241d" opacity=".6">CREAM · 60ml</text>
+</svg>

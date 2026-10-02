@@ -1,0 +1,35 @@
+<%- include('_top', { title: '상품 관리' }) %>
+<div class="a-head">
+  <div>
+    <h1>상품 관리</h1>
+    <p class="a-muted">홈페이지에 노출되는 제품을 등록·수정합니다. ★ 시그니처 상품은 메인 화면에 크게 소개됩니다.</p>
+  </div>
+  <a class="a-btn" href="/admin/products/new">+ 새 상품 등록</a>
+</div>
+
+<% if (saved === '1') { %><p class="a-alert a-alert--ok">저장되었습니다.</p><% } %>
+<% if (saved === 'deleted') { %><p class="a-alert a-alert--ok">삭제되었습니다.</p><% } %>
+
+<div class="a-list">
+  <% products.forEach(function (p, i) { %>
+  <article class="a-item<%= p.visible ? '' : ' is-hidden' %>">
+    <a class="a-item__thumb" href="/admin/products/<%= p.id %>">
+      <% if (p.images && p.images[0]) { %><img src="<%= p.images[0] %>" alt=""><% } else { %><span>사진 없음</span><% } %>
+    </a>
+    <div class="a-item__body">
+      <p class="a-muted"><%= [p.category, p.capacity].filter(Boolean).join(' · ') %><% if (!p.visible) { %> · <b class="a-tag">숨김</b><% } %><% if (p.featured) { %> · <b class="a-tag a-tag--gold">★ 시그니처</b><% } %></p>
+      <h2><a href="/admin/products/<%= p.id %>"><%= p.name %></a></h2>
+      <p class="a-price"><%= p.price ? won(p.price) : '가격 문의' %><% if (p.originalPrice) { %> <del><%= won(p.originalPrice) %></del><% } %></p>
+    </div>
+    <div class="a-item__actions">
+      <form method="post" action="/admin/products/<%= p.id %>/move"><input type="hidden" name="_csrf" value="<%= csrf %>"><input type="hidden" name="dir" value="up"><button class="a-icon" title="위로" <%= i === 0 ? 'disabled' : '' %>>↑</button></form>
+      <form method="post" action="/admin/products/<%= p.id %>/move"><input type="hidden" name="_csrf" value="<%= csrf %>"><input type="hidden" name="dir" value="down"><button class="a-icon" title="아래로" <%= i === products.length - 1 ? 'disabled' : '' %>>↓</button></form>
+      <form method="post" action="/admin/products/<%= p.id %>/toggle"><input type="hidden" name="_csrf" value="<%= csrf %>"><input type="hidden" name="field" value="featured"><button class="a-icon<%= p.featured ? ' is-on' : '' %>" title="시그니처 지정/해제">★</button></form>
+      <form method="post" action="/admin/products/<%= p.id %>/toggle"><input type="hidden" name="_csrf" value="<%= csrf %>"><input type="hidden" name="field" value="visible"><button class="a-btn a-btn--ghost a-btn--sm"><%= p.visible ? '숨기기' : '노출하기' %></button></form>
+      <a class="a-btn a-btn--sm" href="/admin/products/<%= p.id %>">수정</a>
+    </div>
+  </article>
+  <% }) %>
+  <% if (!products.length) { %><p class="a-empty">등록된 상품이 없습니다. ‘새 상품 등록’을 눌러 시작하세요.</p><% } %>
+</div>
+<%- include('_bottom') %>

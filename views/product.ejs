@@ -1,0 +1,106 @@
+<%- include('partials/head') %>
+<%- include('partials/header', { bodyClass: 'is-sub' }) %>
+<% const p = product; const rate = discountRate(p); const imgs = p.images || []; %>
+
+<main id="main">
+  <nav class="breadcrumb container" aria-label="현재 위치">
+    <a href="/">홈</a><span>/</span><a href="/products">제품</a><% if (p.category) { %><span>/</span><a href="/products?category=<%= encodeURIComponent(p.category) %>"><%= p.category %></a><% } %>
+  </nav>
+
+  <section class="pdp container">
+    <div class="pdp__gallery" data-gallery>
+      <div class="pdp__main" data-reveal-img>
+        <% if (imgs[0]) { %>
+          <img src="<%= imgs[0] %>" alt="<%= p.name %>" width="800" height="1000" data-gallery-main fetchpriority="high">
+        <% } else { %>
+          <div class="p-card__noimg"><%= settings.brandNameEn %></div>
+        <% } %>
+      </div>
+      <% if (imgs.length > 1) { %>
+      <div class="pdp__thumbs" role="list">
+        <% imgs.forEach(function (src, i) { %>
+          <button type="button" class="pdp__thumb<%= i === 0 ? ' is-active' : '' %>" data-gallery-thumb="<%= src %>" aria-label="<%= i + 1 %>번째 이미지 보기">
+            <img src="<%= src %>" alt="" loading="lazy">
+          </button>
+        <% }) %>
+      </div>
+      <% } %>
+    </div>
+
+    <div class="pdp__info">
+      <div class="pdp__sticky">
+        <p class="eyebrow" data-reveal><%= [p.brand, p.category].filter(Boolean).join(' · ') %><% if (p.badge) { %> <span class="pill"><%= p.badge %></span><% } %></p>
+        <h1 class="pdp__name" data-split><%= p.name %></h1>
+        <% if (p.capacity) { %><p class="pdp__capacity" data-reveal><%= p.capacity %></p><% } %>
+        <p class="pdp__summary" data-reveal><%= p.summary %></p>
+
+        <div class="pdp__price" data-reveal>
+          <% if (p.price) { %>
+            <% if (rate) { %><del><%= won(p.originalPrice) %></del><% } %>
+            <div><% if (rate) { %><span class="pdp__rate"><%= rate %>%</span><% } %><strong><%= won(p.price) %></strong></div>
+            <small>배송비 및 구성 변경은 상담 시 안내해 드립니다.</small>
+          <% } else { %>
+            <strong>가격 문의</strong>
+            <small>구성·시기에 따라 달라 대표번호로 안내해 드립니다.</small>
+          <% } %>
+        </div>
+
+        <div class="pdp__buy" data-reveal>
+          <a class="btn btn--block" href="<%= telHref(settings.phone) %>" data-magnetic>
+            전화로 구매 문의 · <%= settings.phone %>
+          </a>
+          <div class="pdp__buy-row">
+            <a class="btn btn--ghost" href="<%= smsHref(settings.phone, '[' + settings.brandName + '] ' + p.name + ' 구매 문의드립니다.') %>">문자 문의</a>
+            <a class="btn btn--ghost" href="#inquiry">상담 신청</a>
+          </div>
+          <p class="pdp__notice">본 홈페이지에서는 결제가 진행되지 않습니다. 상담 후 계좌이체로 구매하실 수 있습니다.</p>
+        </div>
+
+        <div class="accordion" data-reveal>
+          <details open>
+            <summary>제품 설명</summary>
+            <div><% paragraphs(p.description).forEach(function (para) { %><p><%= para %></p><% }) %></div>
+          </details>
+          <% if (p.howToUse) { %>
+          <details>
+            <summary>사용 방법</summary>
+            <div><% paragraphs(p.howToUse).forEach(function (para) { %><p><%= para %></p><% }) %></div>
+          </details>
+          <% } %>
+          <% if (p.ingredients) { %>
+          <details>
+            <summary>주요 성분</summary>
+            <div><% paragraphs(p.ingredients).forEach(function (para) { %><p><%= para %></p><% }) %></div>
+          </details>
+          <% } %>
+          <details>
+            <summary>구매 · 배송 안내</summary>
+            <div>
+              <p>1. 대표번호 <a href="<%= telHref(settings.phone) %>"><%= settings.phone %></a> 로 전화 또는 문자를 주세요.</p>
+              <p>2. 상담 후 안내드리는 계좌로 입금해 주시면 확인 즉시 발송해 드립니다.</p>
+              <p>3. 제품 사용 중 궁금한 점은 언제든 다시 문의해 주세요.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <% if (others.length) { %>
+  <section class="related">
+    <div class="container">
+      <div class="showcase__head">
+        <h2 class="h2" data-split>함께 보면 좋은 제품</h2>
+        <a class="link-arrow" href="/products">전체 보기 <span>→</span></a>
+      </div>
+      <div class="grid-products">
+        <% others.forEach(function (o) { %><div data-reveal><%- include('partials/product-card', { p: o }) %></div><% }) %>
+      </div>
+    </div>
+  </section>
+  <% } %>
+
+  <%- include('partials/inquiry', { back: productUrl(p), selected: p.id, products: [p].concat(others) }) %>
+</main>
+
+<%- include('partials/footer') %>
